@@ -1,0 +1,9 @@
+Remove 2 counters from Heap 1
+Lose Game
+Remove 239 counters from Heap 3
+Remove 6 counters from Heap 2
+Remove 1 counter from Heap 1
+Remove 9 counters from Heap 5
+Lose Game
+Remove 9097 counters from Heap 5
+Remove 5 counters from Heap 8
