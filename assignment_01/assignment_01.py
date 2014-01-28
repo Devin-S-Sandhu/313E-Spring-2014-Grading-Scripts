@@ -131,13 +131,10 @@ def assign01(csid, writeToFile) :
 
   #writing grade time!
   if late == -1:
-    if writeToFile: outputFile.write('0\t More than 7 days late')
-    print('Late more than 7 days!')
+    if writeToFile: outputFile.write('0\t More than 2 days late')
+    print('Late more than 2 days!')
   else :
-    if late == 3:
-      comments.append("3-7 days late (-30)")
-      grade -= 30
-    elif late == 2:
+    if late == 2:
       comments.append("2 days late (-20)")
       grade -= 20
     elif late == 1:
@@ -170,8 +167,6 @@ def isLate(splitted):
     return 1
   elif turninDate <= lateTwo:
     return 2
-  elif turninDate <= lateSev:
-    return 3
   else :
     return -1
 
