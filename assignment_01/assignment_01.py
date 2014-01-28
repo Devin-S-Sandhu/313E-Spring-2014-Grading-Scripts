@@ -146,8 +146,8 @@ def assign01(csid, writeToFile) :
       grade -= 10
 
     if not header:
-      comments.append("missing comments or malformed header (-10)")
-      grade -= 10
+      comments.append("missing comments or malformed header (-5)")
+      grade -= 5
 
     if writeToFile: outputFile.write(str(grade+style) + "\t" + ', '.join(comments))
 
