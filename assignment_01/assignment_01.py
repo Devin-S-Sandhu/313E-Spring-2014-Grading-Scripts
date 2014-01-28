@@ -126,7 +126,7 @@ def assign01(csid, writeToFile) :
   #checking for header and style
   input("Hit Enter to cat")
   print(subprocess.getoutput('cat ' + fileToGrade))
-  headerInput = input("Header and comments? (y/n, hit enter for y): ")
+  headerInput = input("Header(y/n, hit enter for y): ")
   if headerInput == 'y' or headerInput == '':
     header = True
   else :
