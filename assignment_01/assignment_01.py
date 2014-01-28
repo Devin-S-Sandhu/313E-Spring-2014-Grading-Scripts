@@ -102,6 +102,7 @@ def assign01(csid, writeToFile) :
     minLen = min(len(outputLines), len(correctLines))
     grade = 0
     index = 0
+    testsFailed = []
     for i in range(minLen):
       if i < 5 and outputLines[i] == correctLines[i]:
         grade += 10
@@ -109,6 +110,18 @@ def assign01(csid, writeToFile) :
         grade += 5
       elif i == 4 and outputLines[i] == 'Remove 1 counters from Heap 1':
         grade += 10
+      else:
+        print('Failed Test',i)
+        print('\tTheir Output')
+        print('\t' + outputLines[i])
+        print('\tCorrect Output')
+        print('\t' + correctLines[i])
+        testsFailed.append(i)
+
+    if len(testsFailed) != 0:
+      comments.append("Failed tests " + ' '.join(str(x) for x in testsFailed))
+    else:
+      print('Passed all tests =D')
 
   #checking for header and style
   input("Hit Enter to cat")
