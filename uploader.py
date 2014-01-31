@@ -2,9 +2,10 @@
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+import os
 
-turninuser = "devins";
-turninpass = "";
+turninuser = "";
+turninpass = ""
 assgn = "01"; #assignment number, used for a1.txt
 dirlocation = os.getcwd(); #directory that holds csuserid/a1.txt for students
 #to skip past half the alphabet, use line 32.
@@ -25,6 +26,7 @@ driver.find_element_by_name("class").send_keys(Keys.RETURN);
 driver.find_element_by_xpath("//input[@value='change class']").click();
 
 #get all students
+print(driver.find_elements_by_tag_name("select"))
 student = driver.find_element_by_name("user");
 students = []
 for option in student.find_elements_by_tag_name('option'):
@@ -35,12 +37,13 @@ for option in student.find_elements_by_tag_name('option'):
 for s in students:
   driver.find_element_by_xpath("//select/option[@value='"+ s +"']").click();
   driver.find_element_by_xpath("//input[@value='change user']").click();
-  name = dirlocation + s + '/assignment_'+ assgn +'.txt'; 
+  name = dirlocation + '/' + s + '/assignment_'+ assgn +'.txt'; 
   try:
-      with open(name):  
+      with open(name):
+        print 'Found files for ' + s;  
         pass
   except IOError:
-      print 'I cant find files for ' + s; 
+      print '\tI cant find files for ' + s; 
       continue
   driver.find_element_by_xpath("//input[@type='file']").send_keys(name);
   driver.find_element_by_xpath("//input[@value='Upload']").click();
