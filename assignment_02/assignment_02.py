@@ -15,8 +15,6 @@ filename = "TestCipher.py"
 dateString = "1-27-2013 23:00:00"
 
 outputFile = open(outputFilename, 'a')
-correctFile = open('correct.txt', 'r')
-correctLines = correctFile.read().splitlines()
 
 def main():
   out = subprocess.getoutput('ls ./')
