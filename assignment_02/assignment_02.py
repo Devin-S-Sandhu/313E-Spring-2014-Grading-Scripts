@@ -188,7 +188,7 @@ def assign01(csid, writeToFile) :
       comments.append("1 day late (-10)")
       grade -= 10
 
-    if wrongFileName or header:
+    if wrongFileName or not header:
       grade -= 5
       if wrongFileName:
         comments.append("wrong filename (-5)")
