@@ -6,7 +6,7 @@ import os
 
 turninuser = "";
 turninpass = ""
-assgn = "01"; #assignment number, used for a1.txt
+assgn = "02"; #assignment number, used for a1.txt
 dirlocation = os.getcwd(); #directory that holds csuserid/a1.txt for students
 #to skip past half the alphabet, use line 32.
 
@@ -35,8 +35,13 @@ for option in student.find_elements_by_tag_name('option'):
 
 #go through students
 for s in students:
-  driver.find_element_by_xpath("//select/option[@value='"+ s +"']").click();
-  driver.find_element_by_xpath("//input[@value='change user']").click();
+  try:
+    driver.find_element_by_xpath("//select/option[@value='"+ s +"']").click();
+    driver.find_element_by_xpath("//input[@value='change user']").click();
+  except:
+    print sys.exc_info()[0]
+    print 'error on ' + s
+    continue
   name = dirlocation + '/' + s + '/assignment_'+ assgn +'.txt'; 
   try:
       with open(name):
