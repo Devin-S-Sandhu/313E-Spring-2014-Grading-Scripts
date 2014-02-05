@@ -104,7 +104,7 @@ def assign01(csid, writeToFile) :
   outputText.append(['dsvvb kbnvw','hello world','zilwg aocdh','hello world'])
   outputText.append(['dqc emlp!!!','hai   guyz','qfh','!!tri  cky!!'])
   inputText.append(['hello world', 'dsvvb kbnvw','hello world','seal','zilwg aocdh','seal'])
-  inputText.append(['HAI GUYZ!!!', 'dqc   elmp','xyz','thisisapassphrase','!!tri  cky!!','aaaaaazzzzzz'])
+  inputText.append(['HAI GUYZ!!!', 'dqc   emlp','xyz','thisisapassphrase','!!tri  cky!!','aaaaaazzzzzz'])
 
   if not (fileToGrade == '' and late != -1):
     correctFormatting = True
