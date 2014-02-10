@@ -1,0 +1,8 @@
+-5.0 -6.0                       # coordinates of P
+3.0 -6.0                       # coordinates of Q
+1.0 0.0                        # coordinates of A
+1.0 -1.0                      # coordinates of B
+0.0 0.0                        # coordinates of G
+2.0 0.0                      # coordinates of H
+0.0 0.0 -6.0 0.0 -4.0 -8.0      # coordinates of the vertices R, S, and T
+-6.0 -6.0 0.0 -6.0 -4.0 2.0    # coordinates of the vertices J, K, and L
