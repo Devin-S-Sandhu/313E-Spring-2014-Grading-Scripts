@@ -1,23 +1,23 @@
 Coordinates of P: (-2.0, 12.0)
 Coordinates of Q: (3.0, 0.5)
-Distance between P and Q: 12.5399
-Slope and Intercept of PQ: slope: -2.3, intercept: 7.4
+Distance between P and Q: 12.539936203984453
+Slope and Intercept of PQ: Slope: -2.3 , Intercept: 7.4
 Coordinates of A: (-1.0, 9.0)
 Coordinates of B: (1.3, -13.4)
-Slope and Intercept of AB: slope: -9.73913, intercept: -0.73913
+Slope and Intercept of AB: Slope: -9.73913043478261 , Intercept: -0.7391304347826093
 PQ is not parallel to AB
 PQ is not perpendicular to AB
-Coordinates of intersection point of PQ and AB: (-1.0941, 9.91642)
+Coordinates of intersection point of PQ and AB: (-1.0940970192869668, 9.916423144360024)
 Coordinates of G: (10.0, 0.0)
 Coordinates of H: (2.0, -1.0)
 G and H are not on the same side of PQ
 G and H are on the same side of AB
 Vertices of triangle RST: (0.4, 12.4), (-6.4, -1.0), (2.0, -4.0)
-Perimeter of triangle RST: 40.4241
-Area of triangle RST: 66.48
+Perimeter of triangle RST: 40.424148192637354
+Area of triangle RST: 66.47999999999998
 PQ does pass through triangle RST
 AB does pass through triangle RST
-Vertices of triangle JKL:  (0.0, 0.0), (-2.0, 0.0), (0.0, 5.0)
+Vertices of triangle JKL: (0.0, 0.0), (-2.0, 0.0), (0.0, 5.0)
 Triangle JKL is inside triangle RST
 Triangle JKL does overlap triangle RST
 Triangle JKL is not congruent to triangle RST

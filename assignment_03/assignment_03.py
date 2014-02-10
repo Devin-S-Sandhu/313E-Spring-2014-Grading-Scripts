@@ -92,50 +92,77 @@ def assign01(csid, writeToFile) :
 
   #grading time!
   '''
-  tests 1-5: 10 pts ea
-  tests 6-9: 5 pts ea
+  First file: 46 pts (2pts per line)
+  Second file: 23 pts (1pt per line)
+  1pt FREE!!!
   '''
   if not (fileToGrade == '' and late != -1):
     os.system('cp ../geometry.txt .')
     outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
-
-
-'''
     minLen = min(len(outputLines), len(correctLines))
-    grade = 0
+    grade = 1.0
     index = 0
     testsFailed = []
+    print('\n==================================FILE 1===================================\n')
     for i in range(minLen):
-      if i < 5 and outputLines[i] == correctLines[i]:
-        grade += 10
-      elif i < 9 and outputLines[i] == correctLines[i]:
-        grade += 5
-      elif i == 4 and outputLines[i] == 'Remove 1 counters from Heap 1':
-        grade += 10
+      if outputLines[i] == correctLines[i]:
+        grade += 2
       else:
-        print('Failed Test',i)
-        print('\tTheir Output')
+        print('\n\tTheir Output')
         print('\t' + outputLines[i])
         print('\tCorrect Output')
         print('\t' + correctLines[i])
-        testsFailed.append(i)
+        correctInput = input("Is this line ok? (y/h/n, h is for half, hit enter for y): ")
+        if correctInput == 'y' or correctInput == '':
+          grade += 2
+        elif correctInput == 'h':
+          grade += 1
+        else:
+          testsFailed.append(i)
 
     if len(testsFailed) != 0:
-      comments.append("Failed tests " + ' '.join(str(x) for x in testsFailed))
+      comments.append("File 1: Failed lines: " + ' '.join(str(x) for x in testsFailed))
     else:
-      print('Passed all tests =D')
+      print('Passed all tests on file 1')
 
-'''
+    print('\n============================FILE 2===================================\n')
+    os.system('cp ../geometry2.txt geometry.txt')
+    outputLines2 = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
+    correctFile2 = open('../correct2.txt', 'r')
+    correctLines2 = correctFile2.read().splitlines()
+    minLen2 = min(len(outputLines2), len(correctLines2))
+    testsFailed2 = []
+    for j in range(minLen2):
+      if outputLines2[j] == correctLines2[j]:
+        grade += 1
+      else:
+        print('\tTheir Output')
+        print('\t' + outputLines2[j])
+        print('\tCorrect Output')
+        print('\t' + correctLines2[j])
+        correctInput = input("Is this line ok? (y/h/n, h is for half, hit enter for y): ")
+        if correctInput == 'y' or correctInput == '':
+          grade += 1
+        elif correctInput == 'h':
+          grade += 0.5
+        else:
+          testsFailed2.append(j)
 
+    if len(testsFailed2) != 0:
+      comments.append("File 2: Failed lines: " + ' '.join(str(x) for x in testsFailed2))
+    else:
+      print('Passed all tests on file 2')
 
   #checking for header and style
-  input("Hit Enter to cat")
-  print(subprocess.getoutput('cat ' + fileToGrade))
+  input("Hit Enter to cat first 20 lines (header)")
+  print(subprocess.getoutput('head -20 ' + fileToGrade))
   headerInput = input("Header(y/n, hit enter for y): ")
   if headerInput == 'y' or headerInput == '':
     header = True
   else :
     header = False
+  input("Hit Enter to cat whole file (style/comments)")
+  print(subprocess.getoutput('cat ' + fileToGrade))
   style = input("Style/Other (Out of 30, hit enter for 30): ")
   gen_comments = input("General Comments?: ").rstrip().lstrip()
   gen_comments = gen_comments if len(gen_comments) is not 0 else "style"
@@ -149,10 +176,13 @@ def assign01(csid, writeToFile) :
 
   #writing grade time!
   if late == -1:
-    if writeToFile: outputFile.write('0\t More than 2 days late')
-    print('Late more than 2 days!')
+    if writeToFile: outputFile.write('0\t More than 7 days late')
+    print('Late more than 7 days!')
   else :
-    if late == 2:
+    if late == 3:
+      comments.append("3-7 days late (-30)")
+      grade -= 30
+    elif late == 2:
       comments.append("2 days late (-20)")
       grade -= 20
     elif late == 1:
@@ -186,6 +216,8 @@ def isLate(splitted):
     return 1
   elif turninDate <= lateTwo:
     return 2
+  elif turninDate <= lateSev:
+    return 3
   else :
     return -1
 

@@ -1,7 +1,7 @@
 Coordinates of P: (-5.0, -6.0)
 Coordinates of Q: (3.0, -6.0)
 Distance between P and Q: 8.0
-Slope and Intercept of PQ: slope: 0, intercept: -6.0
+Slope and Intercept of PQ: Slope: 0.0 , Intercept: -6.0
 Coordinates of A: (1.0, 0.0)
 Coordinates of B: (1.0, -1.0)
 Slope and Intercept of AB: slope: inf, intercept: None
@@ -13,8 +13,8 @@ Coordinates of H: (2.0, 0.0)
 G and H are on the same side of PQ
 G and H are not on the same side of AB
 Vertices of triangle RST: (0.0, 0.0), (-6.0, 0.0), (-4.0, -8.0)
-Perimeter of triangle RST: 23.1905
-Area of triangle RST: 24.0
+Perimeter of triangle RST: 23.190483161234482
+Area of triangle RST: 24.00000000000001
 PQ does pass through triangle RST
 AB does not pass through triangle RST
 Vertices of triangle JKL: (-6.0, -6.0), (0.0, -6.0), (-4.0, 2.0) 
