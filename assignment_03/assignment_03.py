@@ -117,6 +117,7 @@ def assign01(csid, writeToFile) :
           grade += 2
         elif correctInput == 'h':
           grade += 1
+          testsFailed.append(i)
         else:
           testsFailed.append(i)
 
@@ -145,6 +146,7 @@ def assign01(csid, writeToFile) :
           grade += 1
         elif correctInput == 'h':
           grade += 0.5
+          testsFailed2.append(j)
         else:
           testsFailed2.append(j)
 
