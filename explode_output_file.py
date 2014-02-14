@@ -22,7 +22,7 @@ for line in f:
     try:
       f2 = open(fileName,'w')
       f2.write('Grade: ' + vals[1] +'\n')
-      f2.write('Comments: ' + vals[2])
+      f2.write('Comments: ' + vals[2].replace(', ','\n'))
       f2.close()
       print('Wrote ' + fileName)
     except:
