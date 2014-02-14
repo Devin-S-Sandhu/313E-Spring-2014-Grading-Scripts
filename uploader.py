@@ -39,7 +39,6 @@ for s in students:
     driver.find_element_by_xpath("//select/option[@value='"+ s +"']").click();
     driver.find_element_by_xpath("//input[@value='change user']").click();
   except:
-    print sys.exc_info()[0]
     print 'error on ' + s
     continue
   name = dirlocation + '/' + s + '/assignment_'+ assgn +'.txt'; 
