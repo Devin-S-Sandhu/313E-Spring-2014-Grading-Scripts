@@ -100,6 +100,8 @@ def assign04(csid, writeToFile) :
   formatted = True
   hasDuplicate = False
   isSorted = True
+  notSorted = []
+  hasDupl = []
 
   if not (fileToGrade == '' and late != -1):
     for numPlayers in inputText:
@@ -152,22 +154,28 @@ def assign04(csid, writeToFile) :
       if len(hand) == 5:
         hands.append(hand)
     if len(hands) != numPlayers:
-      comments.append('failed test ' + str(count + 1) + ' (-5)')
+      comments.append('failed test ' + str(count + 1) + ' (-5) [Wrong Number of Hands]')
       print('Failed Test ' + str(count + 1) + ':')
       print('\tWrong Number of Hands')
     else:
       values = []
       failed = False
+
       if not hasDuplicate:
-        hasDuplicate = checkDuplicate(hands)
+        hasDuplicate, hand = checkDuplicate(hands)
+        if hasDuplicate:
+            hasDupl.append(hand)
 
       for i in range(len(hands)):
         hand = hands[i]
         sortedHand1 = sorted(hand, reverse=True)
-        h1, sortedHand2 = is10(hand)
-        h2, sortedHand3 = isStraight(hand)
+        h1, sortedHand2 = is10(sortedHand1)
+        h2, sortedHand3 = isStraight(sortedHand1)
+
         if isSorted:
           isSorted = sameHand(hand, sortedHand1) or sameHand(hand, sortedHand2) or sameHand(hand, sortedHand3)
+          if not isSorted:
+            notSorted.append(printHand(hand))
 
         if not failed:
           offset = 1
@@ -190,8 +198,9 @@ def assign04(csid, writeToFile) :
                 v = mapping[line]
 
               if (v != h1) and (v != h2):
-                comments.append('failed test ' + str(count + 1) + ' (-5)')
-                comments.append(printHand(hand) + ' != ' + line)
+                strList = map(lambda x: printHand(x), hands)
+                comm = 'Hand = ' + printHand(hand) + '; Output = ' + line
+                comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
                 print('Failed Test ' + str(count + 1) + ':')
                 print('\tHand: ' + printHand(hand))
                 print('\tType: ' + line)
@@ -204,22 +213,32 @@ def assign04(csid, writeToFile) :
                   values.append(computeScore(h2, sortedHand3))
 
               break
+
             if failed:
               break
-      maxScore = max(values)
+
+      if len(values) != 0:
+        maxScore = max(values)
+
       winners = [i + 1 for i in range(len(values)) if values[i] >= maxScore][::-1]
+
       if len(winners) == 1:
         if output[-1].find(str(winners[0])) < 0:
-          comments.append('failed test ' + str(count + 1) + ' (-5)')
+          strList = map(lambda x: printHand(x), hands)
+          comm = 'Hands = [' + ', '.join(strList) + ']; Winner = ' + str(winners[0]) + '; Output = ' + output[-1]
+          comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
           print('Failed Test ' + str(count + 1) + ':')
           print('\tCorrect: ' + str(winners[0]))
           print('\tOutput: ' + output[-1])
           failed = True
+
       else:
         pos = -1
         for w in winners:
           if output[pos].find(str(w)) < 0:
-            comments.append('failed test ' + str(count + 1) + ' (-5)')
+            strList = map(lambda x: printHand(x), hands)
+            comm = 'Hands = [' + ', '.join(strList) + ']; Winner = ' + str(w) + '; Output = ' + output[pos]
+            comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
             print('Failed Test ' + str(count + 1) + ':')
             print('\tCorrect: ' + str(w))
             print('\tOutput: ' + output[pos])
@@ -237,11 +256,13 @@ def assign04(csid, writeToFile) :
   if isSorted:
     grade += 5
   else:
-    comments.append('spotted incorrectly sorted hand (-5)')
+    comm = '[' + ', '.join(notSorted) + ']'
+    comments.append('spotted incorrectly sorted hand (-5) ' + comm)
 
   if not hasDuplicate:
     grade += 5
   else:
+    comm = 'Hands = [' + ', '.join(hasDupl) + ']'
     comments.append('spotted duplicate cards (-5)')
 
   if grade == 70:
@@ -249,7 +270,6 @@ def assign04(csid, writeToFile) :
   else:
     print('Grade: ' + str(grade)+'/70')
 
-'''
   #checking for header and style
   input("Hit Enter to cat")
   print(subprocess.getoutput('cat ' + fileToGrade))
@@ -297,7 +317,7 @@ def assign04(csid, writeToFile) :
 
   if writeToFile: outputFile.write('\n')
   os.chdir("..")
-'''
+
 #returns the number of days late an assignment is
 def isLate(splitted):
   dueDate = datetime.strptime(dateString,"%m-%d-%Y %H:%M:%S")
