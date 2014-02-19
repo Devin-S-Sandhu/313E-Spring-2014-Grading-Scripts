@@ -103,6 +103,7 @@ def assign04(csid, writeToFile) :
   notSorted = []
   hasDupl = []
   progCrashed = []
+  crashedComm = False
 
   if not (fileToGrade == '' and late != -1):
     for numPlayers in inputText:
@@ -118,30 +119,36 @@ def assign04(csid, writeToFile) :
         for o in outputGame:
           if o.find('Traceback') > -1:
             crashed = True
+            crashedComm = True
             break
 
         progCrashed.append(crashed)
         if not crashed:
-          # check output format of all 12 tests
-          if outputGame[0].find('Enter the number of hands to play: ') < 0:
+          # check output format of all 11 tests
+          if (outputGame[0].find('Enter the number of hands to play: ') < 0) and (outputGame[0].find('Enter number of hands to play: ') < 0):
             formatted = False
           if formatted:
             for i in range(1, numPlayers + 1):
               if i >= len(outputGame):
+                print('S1')
                 formatted = False
               elif outputGame[i].find('Hand ' + str(i) + ': ') < 0:
+                print('S12')
                 formatted = False
               if not formatted: break
           if formatted:
             for i in range(indType, numPlayers + indType):
               if i >= len(outputGame):
+                print('S2')
                 formatted = False
               elif outputGame[i].find('Hand ' + str(i - indType + 1) + ': ') < 0:
+                print('S21')
                 formatted = False
               if not formatted: break
           if formatted:
             for i in range(indSoln, len(outputGame)):
               if (outputGame[i] != '') and (outputGame[i].find('Hand ') < 0) and (outputGame[i].find('.') < 0):
+                print('here?')
                 formatted = False
 
         outputList.append(list(filter(None, outputGame)))
@@ -274,6 +281,9 @@ def assign04(csid, writeToFile) :
   else:
     comm = 'Hands = [' + ', '.join(hasDupl) + ']'
     comments.append('spotted duplicate cards (-5)')
+
+  if crashedComm:
+    comments.append('program crashed')
 
   if grade == 70:
     print('Perfection =D')
