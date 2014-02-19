@@ -130,25 +130,20 @@ def assign04(csid, writeToFile) :
           if formatted:
             for i in range(1, numPlayers + 1):
               if i >= len(outputGame):
-                print('S1')
                 formatted = False
               elif outputGame[i].find('Hand ' + str(i) + ': ') < 0:
-                print('S12')
                 formatted = False
               if not formatted: break
           if formatted:
             for i in range(indType, numPlayers + indType):
               if i >= len(outputGame):
-                print('S2')
                 formatted = False
               elif outputGame[i].find('Hand ' + str(i - indType + 1) + ': ') < 0:
-                print('S21')
                 formatted = False
               if not formatted: break
           if formatted:
             for i in range(indSoln, len(outputGame)):
               if (outputGame[i] != '') and (outputGame[i].find('Hand ') < 0) and (outputGame[i].find('.') < 0):
-                print('here?')
                 formatted = False
 
         outputList.append(list(filter(None, outputGame)))
@@ -195,72 +190,75 @@ def assign04(csid, writeToFile) :
               notSorted.append(printHand(hand))
 
           if not failed:
-            offset = 1
-            if (numPlayers + offset >= len(output)) or (output[numPlayers + offset].find('1') < 0):
-              offset = 0
+            offset = 0
+            while (numPlayers + offset < len(output)) and (output[numPlayers + offset].find('1') < 0):
+              offset += 1
 
-            for j in range(numPlayers + offset, len(output)):
-              line = output[j].rstrip()
-              pos = line.find(str(i + 1))
+            j = numPlayers + offset + i
+            line = output[j].rstrip()
+            pos = line.find(str(i + 1))
 
-              if pos >= 0:
-                for p in range(pos, len(line)):
-                  if 'a' <= line[p].lower() <= 'z':
-                    pos = p
-                    break
-                line = line[pos:].lower()
+            if pos >= 0:
+              for p in range(pos, len(line)):
+                if 'a' <= line[p].lower() <= 'z':
+                  pos = p
+                  break
+              line = line[pos:].lower()
 
-                v = -1
-                if line in mapping:
-                  v = mapping[line]
+              v = -1
+              if line in mapping:
+                v = mapping[line]
 
-                if (v != h1) and (v != h2):
-                  strList = map(lambda x: printHand(x), hands)
-                  comm = 'Hand = ' + printHand(hand) + '; Output = ' + line
-                  comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
-                  print('Failed Test ' + str(count + 1) + ':')
-                  print('\tHand: ' + printHand(hand))
-                  print('\tType: ' + line)
-                  failed = True
-
-                if not failed:
-                  if v == h1:
-                    values.append(computeScore(h1, sortedHand2))
-                  else:
-                    values.append(computeScore(h2, sortedHand3))
-
+              if (v != h1) and (v != h2):
+                comm = 'Hand = ' + printHand(hand) + '; Output = ' + line
+                comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
+                print('Failed Test ' + str(count + 1) + ':')
+                print('\tHand: ' + printHand(hand))
+                print('\tType: ' + line)
+                failed = True
                 break
 
-              if failed:
-                break
-
-        if len(values) != 0:
-          maxScore = max(values)
-
-        winners = [i + 1 for i in range(len(values)) if values[i] >= maxScore][::-1]
-
-        if len(winners) == 1:
-          if output[-1].find(str(winners[0])) < 0:
-            strList = map(lambda x: printHand(x), hands)
-            comm = 'Hands = [' + ', '.join(strList) + ']; Winner = ' + str(winners[0]) + '; Output = ' + output[-1]
-            comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
-            print('Failed Test ' + str(count + 1) + ':')
-            print('\tCorrect: ' + str(winners[0]))
-            print('\tOutput: ' + output[-1])
-            failed = True
-
-        else:
-          pos = -1
-          for w in winners:
-            if output[pos].find(str(w)) < 0:
-              strList = map(lambda x: printHand(x), hands)
-              comm = 'Hands = [' + ', '.join(strList) + ']; Winner = ' + str(w) + '; Output = ' + output[pos]
-              comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
+              if not failed:
+                if v == h1:
+                  values.append(computeScore(h1, sortedHand2))
+                else:
+                  values.append(computeScore(h2, sortedHand3))
+            else:
+              comments.append('failed test ' + str(count + 1) + ' (-5) [Can''t find the type]')
               print('Failed Test ' + str(count + 1) + ':')
-              print('\tCorrect: ' + str(w))
-              print('\tOutput: ' + output[pos])
+              print('\tHand: ' + printHand(hand))
+              print('\tType: ' + line)
               failed = True
               break
+
+        if not failed:
+          if len(values) != 0:
+            maxScore = max(values)
+
+          winners = [i + 1 for i in range(len(values)) if values[i] >= maxScore][::-1]
+
+          if len(winners) == 1:
+            if output[-1].find(str(winners[0])) < 0:
+              strList = map(lambda x: printHand(x), hands)
+              comm = 'Hands = [' + ', '.join(strList) + ']; Winner = ' + str(winners[0]) + '; Output = ' + output[-1]
+              comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
+              print('Failed Test ' + str(count + 1) + ':')
+              print('\tCorrect: ' + str(winners[0]))
+              print('\tOutput: ' + output[-1])
+              failed = True
+
+          else:
+            pos = -1
+            for w in winners:
+              if output[pos].find(str(w)) < 0:
+                strList = map(lambda x: printHand(x), hands)
+                comm = 'Hands = [' + ', '.join(strList) + ']; Winner = ' + str(w) + '; Output = ' + output[pos]
+                comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
+                print('Failed Test ' + str(count + 1) + ':')
+                print('\tCorrect: ' + str(w))
+                print('\tOutput: ' + output[pos])
+                failed = True
+                break
 
         if not failed:
           grade += 5
