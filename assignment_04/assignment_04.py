@@ -271,13 +271,15 @@ def assign04(csid, writeToFile) :
     print('Grade: ' + str(grade)+'/70')
 
   #checking for header and style
-  input("Hit Enter to cat")
-  print(subprocess.getoutput('cat ' + fileToGrade))
+  input("Hit Enter to cat first 20 lines (header)")
+  print(subprocess.getoutput('head -20 ' + fileToGrade))
   headerInput = input("Header(y/n, hit enter for y): ")
   if headerInput == 'y' or headerInput == '':
     header = True
-  else:
+  else :
     header = False
+  input("Hit Enter to cat whole file (style/comments)")
+  print(subprocess.getoutput('cat ' + fileToGrade))
   style = input("Style/Other (Out of 30, hit enter for 30): ")
   gen_comments = input("General Comments?: ").rstrip().lstrip()
   gen_comments = gen_comments if len(gen_comments) is not 0 else "style"
