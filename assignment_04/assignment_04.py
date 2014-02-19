@@ -283,7 +283,7 @@ def assign04(csid, writeToFile) :
     print('Perfection =D')
   else:
     print('Grade: ' + str(grade)+'/70')
-'''
+
   #checking for header and style
   input("Hit Enter to cat first 20 lines (header)")
   print(subprocess.getoutput('head -20 ' + fileToGrade))
@@ -333,7 +333,7 @@ def assign04(csid, writeToFile) :
 
   if writeToFile: outputFile.write('\n')
   os.chdir("..")
-'''
+
 #returns the number of days late an assignment is
 def isLate(splitted):
   dueDate = datetime.strptime(dateString,"%m-%d-%Y %H:%M:%S")
