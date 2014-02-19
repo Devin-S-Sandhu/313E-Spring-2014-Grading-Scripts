@@ -102,6 +102,7 @@ def assign04(csid, writeToFile) :
   isSorted = True
   notSorted = []
   hasDupl = []
+  progCrashed = []
 
   if not (fileToGrade == '' and late != -1):
     for numPlayers in inputText:
@@ -110,30 +111,38 @@ def assign04(csid, writeToFile) :
         out = process.communicate(bytes(str(numPlayers), 'UTF-8'))[0]
         outputGame = str(out)[2:-1].split('\\n')
 
+        crashed = False
         indType = numPlayers + 2
         indSoln = numPlayers + indType + 1
 
-        # check output format of all 12 tests
-        if outputGame[0].find('Enter the number of hands to play: ') < 0:
-          formatted = False
-        if formatted:
-          for i in range(1, numPlayers + 1):
-            if i >= len(outputGame):
-              formatted = False
-            elif outputGame[i].find('Hand ' + str(i) + ': ') < 0:
-              formatted = False
-            if not formatted: break
-        if formatted:
-          for i in range(indType, numPlayers + indType):
-            if i >= len(outputGame):
-              formatted = False
-            elif outputGame[i].find('Hand ' + str(i - indType + 1) + ': ') < 0:
-              formatted = False
-            if not formatted: break
-        if formatted:
-          for i in range(indSoln, len(outputGame)):
-            if (outputGame[i] != '') and (outputGame[i].find('Hand ') < 0) and (outputGame[i].find('.') < 0):
-              formatted = False
+        for o in outputGame:
+          if o.find('Traceback') > -1:
+            crashed = True
+            break
+
+        progCrashed.append(crashed)
+        if not crashed:
+          # check output format of all 12 tests
+          if outputGame[0].find('Enter the number of hands to play: ') < 0:
+            formatted = False
+          if formatted:
+            for i in range(1, numPlayers + 1):
+              if i >= len(outputGame):
+                formatted = False
+              elif outputGame[i].find('Hand ' + str(i) + ': ') < 0:
+                formatted = False
+              if not formatted: break
+          if formatted:
+            for i in range(indType, numPlayers + indType):
+              if i >= len(outputGame):
+                formatted = False
+              elif outputGame[i].find('Hand ' + str(i - indType + 1) + ': ') < 0:
+                formatted = False
+              if not formatted: break
+          if formatted:
+            for i in range(indSoln, len(outputGame)):
+              if (outputGame[i] != '') and (outputGame[i].find('Hand ') < 0) and (outputGame[i].find('.') < 0):
+                formatted = False
 
         outputList.append(list(filter(None, outputGame)))
       except KeyboardInterrupt:
@@ -146,107 +155,108 @@ def assign04(csid, writeToFile) :
     output = outputList[count]
     numPlayers = inputText[count]
     hands = []
-    for test in output:
-      hand = []
-      for token in test.split():
-        if isCard(token):
-          hand.append(card(token))
-      if len(hand) == 5:
-        hands.append(hand)
-    if len(hands) != numPlayers:
-      comments.append('failed test ' + str(count + 1) + ' (-5) [Wrong Number of Hands]')
-      print('Failed Test ' + str(count + 1) + ':')
-      print('\tWrong Number of Hands')
-    else:
-      values = []
-      failed = False
-
-      if not hasDuplicate:
-        hasDuplicate, hand = checkDuplicate(hands)
-        if hasDuplicate:
-            hasDupl.append(hand)
-
-      for i in range(len(hands)):
-        hand = hands[i]
-        sortedHand1 = sorted(hand, reverse=True)
-        h1, sortedHand2 = is10(sortedHand1)
-        h2, sortedHand3 = isStraight(sortedHand1)
-
-        if isSorted:
-          isSorted = sameHand(hand, sortedHand1) or sameHand(hand, sortedHand2) or sameHand(hand, sortedHand3)
-          if not isSorted:
-            notSorted.append(printHand(hand))
-
-        if not failed:
-          offset = 1
-          if output[numPlayers + offset].find('1') < 0:
-            offset = 0
-
-          for j in range(numPlayers + offset, len(output)):
-            line = output[j].rstrip()
-            pos = line.find(str(i + 1))
-
-            if pos >= 0:
-              for p in range(pos, len(line)):
-                if 'a' <= line[p].lower() <= 'z':
-                  pos = p
-                  break
-              line = line[pos:].lower()
-
-              v = -1
-              if line in mapping:
-                v = mapping[line]
-
-              if (v != h1) and (v != h2):
-                strList = map(lambda x: printHand(x), hands)
-                comm = 'Hand = ' + printHand(hand) + '; Output = ' + line
-                comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
-                print('Failed Test ' + str(count + 1) + ':')
-                print('\tHand: ' + printHand(hand))
-                print('\tType: ' + line)
-                failed = True
-
-              if not failed:
-                if v == h1:
-                  values.append(computeScore(h1, sortedHand2))
-                else:
-                  values.append(computeScore(h2, sortedHand3))
-
-              break
-
-            if failed:
-              break
-
-      if len(values) != 0:
-        maxScore = max(values)
-
-      winners = [i + 1 for i in range(len(values)) if values[i] >= maxScore][::-1]
-
-      if len(winners) == 1:
-        if output[-1].find(str(winners[0])) < 0:
-          strList = map(lambda x: printHand(x), hands)
-          comm = 'Hands = [' + ', '.join(strList) + ']; Winner = ' + str(winners[0]) + '; Output = ' + output[-1]
-          comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
-          print('Failed Test ' + str(count + 1) + ':')
-          print('\tCorrect: ' + str(winners[0]))
-          print('\tOutput: ' + output[-1])
-          failed = True
-
+    if not progCrashed[count]:
+      for test in output:
+        hand = []
+        for token in test.split():
+          if isCard(token):
+            hand.append(card(token))
+        if len(hand) == 5:
+          hands.append(hand)
+      if len(hands) != numPlayers:
+        comments.append('failed test ' + str(count + 1) + ' (-5) [Wrong Number of Hands]')
+        print('Failed Test ' + str(count + 1) + ':')
+        print('\tWrong Number of Hands')
       else:
-        pos = -1
-        for w in winners:
-          if output[pos].find(str(w)) < 0:
+        values = []
+        failed = False
+
+        if not hasDuplicate:
+          hasDuplicate, hand = checkDuplicate(hands)
+          if hasDuplicate:
+              hasDupl.append(hand)
+
+        for i in range(len(hands)):
+          hand = hands[i]
+          sortedHand1 = sorted(hand, reverse=True)
+          h1, sortedHand2 = is10(sortedHand1)
+          h2, sortedHand3 = isStraight(sortedHand1)
+
+          if isSorted:
+            isSorted = sameHand(hand, sortedHand1) or sameHand(hand, sortedHand2) or sameHand(hand, sortedHand3)
+            if not isSorted:
+              notSorted.append(printHand(hand))
+
+          if not failed:
+            offset = 1
+            if (numPlayers + offset >= len(output)) or (output[numPlayers + offset].find('1') < 0):
+              offset = 0
+
+            for j in range(numPlayers + offset, len(output)):
+              line = output[j].rstrip()
+              pos = line.find(str(i + 1))
+
+              if pos >= 0:
+                for p in range(pos, len(line)):
+                  if 'a' <= line[p].lower() <= 'z':
+                    pos = p
+                    break
+                line = line[pos:].lower()
+
+                v = -1
+                if line in mapping:
+                  v = mapping[line]
+
+                if (v != h1) and (v != h2):
+                  strList = map(lambda x: printHand(x), hands)
+                  comm = 'Hand = ' + printHand(hand) + '; Output = ' + line
+                  comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
+                  print('Failed Test ' + str(count + 1) + ':')
+                  print('\tHand: ' + printHand(hand))
+                  print('\tType: ' + line)
+                  failed = True
+
+                if not failed:
+                  if v == h1:
+                    values.append(computeScore(h1, sortedHand2))
+                  else:
+                    values.append(computeScore(h2, sortedHand3))
+
+                break
+
+              if failed:
+                break
+
+        if len(values) != 0:
+          maxScore = max(values)
+
+        winners = [i + 1 for i in range(len(values)) if values[i] >= maxScore][::-1]
+
+        if len(winners) == 1:
+          if output[-1].find(str(winners[0])) < 0:
             strList = map(lambda x: printHand(x), hands)
-            comm = 'Hands = [' + ', '.join(strList) + ']; Winner = ' + str(w) + '; Output = ' + output[pos]
+            comm = 'Hands = [' + ', '.join(strList) + ']; Winner = ' + str(winners[0]) + '; Output = ' + output[-1]
             comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
             print('Failed Test ' + str(count + 1) + ':')
-            print('\tCorrect: ' + str(w))
-            print('\tOutput: ' + output[pos])
+            print('\tCorrect: ' + str(winners[0]))
+            print('\tOutput: ' + output[-1])
             failed = True
-            break
 
-      if not failed:
-        grade += 5
+        else:
+          pos = -1
+          for w in winners:
+            if output[pos].find(str(w)) < 0:
+              strList = map(lambda x: printHand(x), hands)
+              comm = 'Hands = [' + ', '.join(strList) + ']; Winner = ' + str(w) + '; Output = ' + output[pos]
+              comments.append('failed test ' + str(count + 1) + ' (-5) ' + comm)
+              print('Failed Test ' + str(count + 1) + ':')
+              print('\tCorrect: ' + str(w))
+              print('\tOutput: ' + output[pos])
+              failed = True
+              break
+
+        if not failed:
+          grade += 5
 
   if formatted:
     grade += 5
