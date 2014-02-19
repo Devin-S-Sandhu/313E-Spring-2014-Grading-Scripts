@@ -10,7 +10,7 @@ class card:
     def __str__(self):
         r = self.r
         for (x, y) in mapping.items():
-            r = x if self.r == y else r
+            r = x if self.r == y and r > 10 else r
         return str(r) + self.s
 
     def __lt__(self, other):
@@ -157,6 +157,7 @@ def isStraight(h):
         for c in h:
             if c.s != suit:
                 return 5, l
+        print(printHand(l))
         return 9, l
     return 0, h
 
@@ -165,9 +166,9 @@ def checkDuplicate(hands):
     for h in hands:
         for c in h:
             if str(c) in s:
-                return True
+                return True, printHand(h)
             s.add(str(c))
-    return False
+    return False, ''
 
 def sameHand(h1, h2):
     for i in range(5):
