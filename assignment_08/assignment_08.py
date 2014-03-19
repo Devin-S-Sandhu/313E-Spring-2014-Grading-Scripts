@@ -15,6 +15,10 @@ outputFile = open(outputFilename, 'a')
 filename = "Mondrian.py"
 dateString = "3-7-2014 23:00:00"
 
+
+likedFilename = 'likedPictures.txt'
+likedPictures = ""
+
 def main():
   out = subprocess.getoutput('ls ./')
   CSIDS = out.split("\n")
@@ -35,15 +39,31 @@ def main():
       print(csid + " " + str(count) + " out of " + str(len(myList)))
       print('======================')
       assign08(csid, True)
+
+      #get the most liked pictures for turtle graphics
+      didLike = input("Did you like this person's pictures (y/n enter for NO)")
+        if didLike == 'y':
+          likedPictures.append(csid + '\n')
+          #TODO Check if this works
+
+
   #singleton mode
   else:
     csid = sys.argv[1]
     os.system('clear')
     print('======================')
     print(csid)
-    print('======================')
-    assign05(csid, False)
+    print('======================') 
+    assign08(csid, False)
   outputFile.close()
+
+  #TODO Check if this works
+  #Write to liked picture file 
+  likedFile = open(likedFilename, 'a')
+  likedFile.write(likedPictures)
+  likedFile.close()
+
+
 
 def assign08(csid, writeToFile) :
   fileToGrade = ""
@@ -88,8 +108,8 @@ def assign08(csid, writeToFile) :
   #grading time!
   '''
   10 for output to file (.eps)
-  10 for range (1-6)
-  25 for "recursiveness"
+  10 for range 1 to 6 (4 iterations with 2.5pts per iteration)
+  25 for "recursiveness" (6.25 per picture)
   25 for randomness
   '''
   grade = 0
@@ -100,25 +120,46 @@ def assign08(csid, writeToFile) :
   if not (fileToGrade == '' and late != -1):
     # See if they output to an eps file
     if 'Mondrian.eps' in open(fileToGrade).read():
-      grade += 10 #Get 10 pts for following instructions
+      grade += 10 #Get 10 pts for output to file
       for reclevel in inputText:
         try:
           print("Using recursion level: ", str(reclevel))
+          grade += 2.5 #Get 2.5 pts per iteration
           process = subprocess.Popen(['python3', fileToGrade], **pipes)
           out = process.communicate(bytes(str(reclevel), 'UTF-8'))[0]
           #rename the file to the adecuate one
           if not second:
             if reclevel == 4:
               second = True
-              print("REPEATING")
             newFile = "Mondrian" + str(reclevel) + ".eps"
-            print("Finished working on: ", newFile)
             process = subprocess.Popen(['cp', "Mondrian.eps", newFile], **pipes)
+            print("Finished working on: ", newFile)
           else:
             #We're running recursive level 4 again to test for randomness
             newFile = "Mondrian" + str(reclevel) + "Random.eps"
-            print("Finished working on: ", newFile)
             process = subprocess.Popen(['cp', "Mondrian.eps", newFile], **pipes)
+            print("Finished working on: ", newFile)
+
+          #open pictures again
+          openAgain = input("Would you like to open the pictures again? (y/n, enter for NO)")
+          if openAgain == 'y':
+            print("Opening pictures...")
+            #TODO Open the files
+
+          #check for randomness
+          randomness = input("Were the 2 last files different? (y/n, enter for YES)")
+          if randomness == 'y' or randomness == '':
+            grade += 25
+          else:
+            comments.append("Not random (-25) ")
+
+          #check for "recursiveness"
+          recursiveness = input("Did they use recursion? (y/n, enter for YES)")
+          if recursiveness == 'y' or recursiveness == '':
+            grade += 25
+          else:
+            comments.append("Not recursive (-25) ")
+
 
         except KeyboardInterrupt:
           print(' passed ^C')
@@ -126,15 +167,42 @@ def assign08(csid, writeToFile) :
         #TODO: Check if I can create turtle object to close the window
 
     else:
+      # See if they did NOT output to an eps file
+      second = False
       print("They didn't output to file!!!")
-      print("We'll do it manually")
+      print("(Pay attention to pictures to run only once)")
+      comments.append("Did not output to Mondrian.eps (-10) ")
       for reclevel in inputText:
         try:
           print("Using recursion level: ", str(reclevel))
+          grade += 2.5 #Get 2.5 pts per iteration
           process = subprocess.Popen(['python3', fileToGrade], **pipes)
           out = process.communicate(bytes(str(reclevel), 'UTF-8'))[0]
-          #TODO: Add to the grade (check if it's fine)
-          input()
+
+          if not second:
+            if reclevel == 4:
+              second = True
+            print("Finished working on recursion level: ", str(reclevel))
+
+            #check if the picture was drawn recursively
+            recursive1 = input("Was this one recursive? (y/n enter for YES)")
+            if recursive1 == 'y' or recursive1 == '':
+              grade += 6.25 #For recursion
+          
+          else:
+            #We're running recursive level 4 again to test for randomness
+            print("Finished working on the second recursion level: ", str(reclevel))
+            
+            #check if the picture was drawn recursively
+            recursive1 = input("Was this one recursive? (y/n enter for YES)")
+            if recursive1 == 'y' or recursive1 == '':
+              grade += 6.25 #For recursion
+            
+            #check if the picture was drawn randomly
+            random1 = input("Was this one different from the past picture? (y/n enter for YES)")
+            if random1 == 'y' or random1 == '':
+              grade += 25 #For randomness
+
 
           
         except KeyboardInterrupt:
