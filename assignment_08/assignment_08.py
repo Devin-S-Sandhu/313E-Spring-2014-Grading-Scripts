@@ -10,7 +10,7 @@ import time
 
 pipes = {'stdout':subprocess.PIPE, 'stdin':subprocess.PIPE, 'stderr':subprocess.PIPE}
 
-outputFilename = 'assignment_05.txt'
+outputFilename = 'assignment_08.txt'
 outputFile = open(outputFilename, 'a')
 filename = "Mondrian.py"
 dateString = "3-7-2014 23:00:00"
@@ -34,7 +34,7 @@ def main():
       print('======================')
       print(csid + " " + str(count) + " out of " + str(len(myList)))
       print('======================')
-      assign05(csid, True)
+      assign08(csid, True)
   #singleton mode
   else:
     csid = sys.argv[1]
@@ -45,7 +45,7 @@ def main():
     assign05(csid, False)
   outputFile.close()
 
-def assign05(csid, writeToFile) :
+def assign08(csid, writeToFile) :
   fileToGrade = ""
   late = 0
   grade = 70
@@ -87,34 +87,60 @@ def assign05(csid, writeToFile) :
 
   #grading time!
   '''
-  
+  10 for output to file (.eps)
+  10 for range (1-6)
+  25 for "recursiveness"
+  25 for randomness
   '''
-
-  if not (fileToGrade == '' and late != -1):
-    for numPlayers in inputText:
-      try:
-        process = subprocess.Popen(['python3', fileToGrade], **pipes)
-        out = process.communicate(bytes(str(numPlayers), 'UTF-8'))[0]
-        
-        crashed = False
-
-        for o in outputGame:
-          if o.find('Traceback') > -1:
-            crashed = True
-            break
-        crashList.append(crashed)
-
-        if not crashed:
-          # check output format of all 11 tests
-          if (outputGame[0].find('Enter number of players: ') < 0) or (outputGame[0].find('Enter the number of players: ') < 0):
-            formatted = True
-
-        outputList.append(list(filter(None, outputGame)))
-        
-      except KeyboardInterrupt:
-        print(' passed ^C')
-
   grade = 0
+
+  #Test these recursive levels
+  inputText = [1,3,4,4]
+  second = False #used to determine if it's the second time we're doing 4
+  if not (fileToGrade == '' and late != -1):
+    # See if they output to an eps file
+    if 'Mondrian.eps' in open(fileToGrade).read():
+      grade += 10 #Get 10 pts for following instructions
+      for reclevel in inputText:
+        try:
+          print("Using recursion level: ", str(reclevel))
+          process = subprocess.Popen(['python3', fileToGrade], **pipes)
+          out = process.communicate(bytes(str(reclevel), 'UTF-8'))[0]
+          #rename the file to the adecuate one
+          if not second:
+            if reclevel == 4:
+              second = True
+              print("REPEATING")
+            newFile = "Mondrian" + str(reclevel) + ".eps"
+            print("Finished working on: ", newFile)
+            process = subprocess.Popen(['cp', "Mondrian.eps", newFile], **pipes)
+          else:
+            #We're running recursive level 4 again to test for randomness
+            newFile = "Mondrian" + str(reclevel) + "Random.eps"
+            print("Finished working on: ", newFile)
+            process = subprocess.Popen(['cp', "Mondrian.eps", newFile], **pipes)
+
+        except KeyboardInterrupt:
+          print(' passed ^C')
+
+        #TODO: Check if I can create turtle object to close the window
+
+    else:
+      print("They didn't output to file!!!")
+      print("We'll do it manually")
+      for reclevel in inputText:
+        try:
+          print("Using recursion level: ", str(reclevel))
+          process = subprocess.Popen(['python3', fileToGrade], **pipes)
+          out = process.communicate(bytes(str(reclevel), 'UTF-8'))[0]
+          #TODO: Add to the grade (check if it's fine)
+          input()
+
+          
+        except KeyboardInterrupt:
+          print(' passed ^C')
+
+  
 
   #checking for header and style
   input("Hit Enter to cat first 20 lines (header)")
