@@ -17,7 +17,7 @@ dateString = "3-7-2014 23:00:00"
 
 
 likedFilename = 'likedPictures.txt'
-likedPictures = ""
+likedPictures = []
 
 def main():
   out = subprocess.getoutput('ls ./')
@@ -41,10 +41,10 @@ def main():
       assign08(csid, True)
 
       #get the most liked pictures for turtle graphics
-      didLike = input("Did you like this person's pictures (y/n enter for NO)")
-        if didLike == 'y':
-          likedPictures.append(csid + '\n')
-          #TODO Check if this works
+      didLike = input("\nDid you like this person's pictures? (y/n enter for NO) ")
+      if didLike == 'y':
+        likedPictures.append(csid)
+        #TODO Check if this works
 
 
   #singleton mode
@@ -60,7 +60,7 @@ def main():
   #TODO Check if this works
   #Write to liked picture file 
   likedFile = open(likedFilename, 'a')
-  likedFile.write(likedPictures)
+  likedFile.write("\n" + ' '.join(likedPictures))
   likedFile.close()
 
 
@@ -140,31 +140,29 @@ def assign08(csid, writeToFile) :
             process = subprocess.Popen(['cp', "Mondrian.eps", newFile], **pipes)
             print("Finished working on: ", newFile)
 
-          #open pictures again
-          openAgain = input("Would you like to open the pictures again? (y/n, enter for NO)")
-          if openAgain == 'y':
-            print("Opening pictures...")
-            #TODO Open the files
-
-          #check for randomness
-          randomness = input("Were the 2 last files different? (y/n, enter for YES)")
-          if randomness == 'y' or randomness == '':
-            grade += 25
-          else:
-            comments.append("Not random (-25) ")
-
-          #check for "recursiveness"
-          recursiveness = input("Did they use recursion? (y/n, enter for YES)")
-          if recursiveness == 'y' or recursiveness == '':
-            grade += 25
-          else:
-            comments.append("Not recursive (-25) ")
-
 
         except KeyboardInterrupt:
           print(' passed ^C')
 
-        #TODO: Check if I can create turtle object to close the window
+      #open pictures again
+      openAgain = input("Would you like to open the pictures again? (y/n, enter for NO) ")
+      if openAgain == 'y':
+        print("Opening pictures...")
+        #TODO Open the files
+
+      #check for randomness
+      randomness = input("Were the 2 last files different? (y/n, enter for YES) ")
+      if randomness == 'y' or randomness == '':
+        grade += 25
+      else:
+        comments.append("Not random (-25) ")
+
+      #check for "recursiveness"
+      recursiveness = input("Did they use recursion? (y/n, enter for YES) ")
+      if recursiveness == 'y' or recursiveness == '':
+        grade += 25
+      else:
+        comments.append("Not recursive (-25) ")
 
     else:
       # See if they did NOT output to an eps file
@@ -185,7 +183,7 @@ def assign08(csid, writeToFile) :
             print("Finished working on recursion level: ", str(reclevel))
 
             #check if the picture was drawn recursively
-            recursive1 = input("Was this one recursive? (y/n enter for YES)")
+            recursive1 = input("Was this one recursive? (y/n enter for YES) ")
             if recursive1 == 'y' or recursive1 == '':
               grade += 6.25 #For recursion
           
@@ -194,12 +192,12 @@ def assign08(csid, writeToFile) :
             print("Finished working on the second recursion level: ", str(reclevel))
             
             #check if the picture was drawn recursively
-            recursive1 = input("Was this one recursive? (y/n enter for YES)")
+            recursive1 = input("Was this one recursive? (y/n enter for YES) ")
             if recursive1 == 'y' or recursive1 == '':
               grade += 6.25 #For recursion
             
             #check if the picture was drawn randomly
-            random1 = input("Was this one different from the past picture? (y/n enter for YES)")
+            random1 = input("Was this one different from the past picture? (y/n enter for YES) ")
             if random1 == 'y' or random1 == '':
               grade += 25 #For randomness
 
