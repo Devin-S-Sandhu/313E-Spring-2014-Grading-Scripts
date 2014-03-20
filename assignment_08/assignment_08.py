@@ -190,6 +190,8 @@ def assign08(csid, writeToFile) :
             recursive1 = input("Was this one recursive? (y/n enter for YES) ")
             if recursive1 == 'y' or recursive1 == '':
               grade += 6.25 #For recursion
+            else:
+              comments.append("Not recursive ")
           
           else:
             #We're running recursive level 4 again to test for randomness
