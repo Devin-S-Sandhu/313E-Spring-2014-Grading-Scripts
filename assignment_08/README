@@ -1,3 +1,6 @@
+Make sure the turtle is done drawing before closing the file
+When reopening the .eps file there might be some extra lines showing the path of the turtle (just ignore these as they were not really drawn)
+
 If the student outputs to the eps file then it's easy:
   -You must close each image when it's done to continue to the next one
   -Once you close it the terminal will say that you have finished working on the respective file
