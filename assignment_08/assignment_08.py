@@ -127,6 +127,7 @@ def assign08(csid, writeToFile) :
           grade += 2.5 #Get 2.5 pts per iteration
           process = subprocess.Popen(['python3', fileToGrade], **pipes)
           out = process.communicate(bytes(str(reclevel), 'UTF-8'))[0]
+
           #rename the file to the adecuate one
           if not second:
             if reclevel == 4:
@@ -148,8 +149,11 @@ def assign08(csid, writeToFile) :
       openAgain = input("Would you like to open the pictures again? (y/n, enter for NO) ")
       if openAgain == 'y':
         print("Opening pictures...")
-        #TODO Open the files
-
+        process = subprocess.Popen(['gs', "Mondrian1.eps", newFile], **pipes)
+        process = subprocess.Popen(['gs', "Mondrian3.eps", newFile], **pipes)
+        process = subprocess.Popen(['gs', "Mondrian4.eps", newFile], **pipes)
+        process = subprocess.Popen(['gs', "Mondrian4Random.eps", newFile], **pipes)
+        
       #check for randomness
       randomness = input("Were the 2 last files different? (y/n, enter for YES) ")
       if randomness == 'y' or randomness == '':
