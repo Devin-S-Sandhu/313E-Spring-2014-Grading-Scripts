@@ -7,7 +7,6 @@ If the student outputs to the eps file then it's easy:
   -When you're done with the 4 images you'll be prompted to see the pictures again
   -Verify that the last 2 (which run on recursive level 4) are different
   -the rest should be the mostly same as always
-  -Finally you'll be asked if you liked the pictures and the csid will be stored in likedPictures.txt so you can go back later
 
 If the student does NOT output to the eps file then:
   -Pay attention to each image in order to not redo the grading
@@ -15,4 +14,3 @@ If the student does NOT output to the eps file then:
   -For each image it'll ask if it was recursive
   -Pay special attention to the 3rd and 4th images to know if they're different (testing randomness)
   -the rest should be the mostly same as always
-  -Finally you'll be asked if you liked the pictures and the csid will be stored in likedPictures.txt so you can go back later
