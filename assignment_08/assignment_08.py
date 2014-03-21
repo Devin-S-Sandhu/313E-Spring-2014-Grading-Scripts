@@ -16,8 +16,8 @@ filename = "Mondrian.py"
 dateString = "3-7-2014 23:00:00"
 
 
-likedFilename = 'likedPictures.txt'
-likedPictures = []
+# likedFilename = 'likedPictures.txt'
+# likedPictures = []
 
 def main():
   out = subprocess.getoutput('ls ./')
@@ -40,11 +40,11 @@ def main():
       print('======================')
       assign08(csid, True)
 
-      #get the most liked pictures for turtle graphics
-      didLike = input("\nDid you like this person's pictures? (y/n enter for NO) ")
-      if didLike == 'y':
-        likedPictures.append(csid)
-        #TODO Check if this works
+      # #get the most liked pictures for turtle graphics
+      # didLike = input("\nDid you like this person's pictures? (y/n enter for NO) ")
+      # if didLike == 'y':
+      #   likedPictures.append(csid)
+      #   #TODO Check if this works (it didn't)
 
 
   #singleton mode
@@ -59,9 +59,9 @@ def main():
 
   #TODO Check if this works
   #Write to liked picture file 
-  likedFile = open(likedFilename, 'a')
-  likedFile.write("\n" + ' '.join(likedPictures))
-  likedFile.close()
+  # likedFile = open(likedFilename, 'a')
+  # likedFile.write("\n" + ' '.join(likedPictures))
+  # likedFile.close()
 
 
 
