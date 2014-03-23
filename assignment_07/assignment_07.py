@@ -16,7 +16,7 @@ dateString = "2-28-2014 23:00:00"
 
 outputFile = open(outputFilename, 'a')
 
-def execute(cmd, timeout=10):
+def execute(cmd, timeout=15):
     sub = subprocess.Popen(cmd, **pipes)
     curr = 0
     while curr < timeout and sub.poll() is None:
@@ -110,8 +110,9 @@ def assign07(csid, writeToFile) :
     print('Test ' + str(idx + 1) + ':')
 
     os.system('cp ../' + inFiles[idx] + ' Boxes.txt')
+    os.system('cp ../' + inFiles[idx] + ' boxes.txt')
     # output = subprocess.getoutput('python3 ' + fileToGrade).split('\n\n')
-    signal, output = execute(['python3', fileToGrade], 10)
+    signal, output = execute(['python3', fileToGrade], 15)
     output = output.split('\n\n')
     correct = open('../' + outFiles[idx]).read().split('\n\n')
 
