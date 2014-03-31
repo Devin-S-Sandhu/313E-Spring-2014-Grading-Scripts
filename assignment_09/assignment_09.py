@@ -173,7 +173,7 @@ def assign09(csid, writeToFile) :
         print(' passed ^C on input',text)
 
     #test output
-    permutations = []
+    checkPermutations = True
     for (out,test) in zip(output,inputNums):
       out = [x.rstrip() for x in out]
       out = list(filter(None,out))
@@ -204,7 +204,8 @@ def assign09(csid, writeToFile) :
           print('\t' + str(row))
         comments.append(comment)
 
-      if permutations == []: #only check permutations once
+      if checkPermutations: #only check permutations once
+        checkPermutations = False
         trimmed = filtered[test:]
         for x in range(0,len(trimmed),3):
           square = []
