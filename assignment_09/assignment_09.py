@@ -206,6 +206,7 @@ def assign09(csid, writeToFile) :
 
       if checkPermutations: #only check permutations once
         checkPermutations = False
+        permutations = []
         trimmed = filtered[test:]
         for x in range(0,len(trimmed),3):
           square = []
