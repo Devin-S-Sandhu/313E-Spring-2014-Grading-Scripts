@@ -180,7 +180,8 @@ def assign09(csid, writeToFile) :
 
       filtered = []
       for line in out:
-        if 'square' not in line and 'odd' not in line:
+        #people spelt square wrong...
+        if 'square' not in line and 'odd' not in line and 'magic' not in line:
           filtered.append(line)
       if len(filtered) != test + (3*8):
         print()
@@ -211,8 +212,10 @@ def assign09(csid, writeToFile) :
         for x in range(0,len(trimmed),3):
           square = []
           square.append(trimmed[x])
-          square.append(trimmed[x+1])
-          square.append(trimmed[x+2])
+          if x + 1 < len(trimmed):
+            square.append(trimmed[x+1])
+          if x + 2 < len(trimmed):
+            square.append(trimmed[x+2])
           permutations.append(square)
         if len(permutations) != 8:
           grade -= 15
