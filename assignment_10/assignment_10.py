@@ -108,11 +108,11 @@ def assign10(csid, writeToFile) :
     output = sub.communicate()[0].decode('utf-8').split('=TestLinkedList=')
     if len(output) == 2:
       output = output[1].split('\n')
-      output = [line for line in output if line != '']
-      if output[0].isdigit():
-        grade = int(output[0])
+      output = [line for line in output if line != '' and '::' in line]
+      if len(output) > 0:
+        grade = int(output[0].split('::')[1])
         for l in output[1:]:
-          comments.append(l.strip())
+          comments.append(l.split('::')[1].strip())
       else:
         grade = 0
         comments.append('program crashed (-70)')

@@ -311,6 +311,6 @@ gr, cmt = runTests(2, l1, l2, addWorks)
 grade += gr
 comments.extend(cmt)
 
-print (str(grade))
+print ('g::' + str(grade))
 for l in comments:
-    print (l)
+    print ('c::' + l)
