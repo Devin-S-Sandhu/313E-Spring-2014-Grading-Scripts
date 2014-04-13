@@ -314,4 +314,3 @@ comments.extend(cmt)
 print (str(grade))
 for l in comments:
     print (l)
-print('finished')

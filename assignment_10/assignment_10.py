@@ -103,13 +103,12 @@ def assign10(csid, writeToFile) :
   if sub.poll() is None:
     sub.terminate()
     grade = 0
-    comments.append('program did not terminate (-70)')
-    comments.append('contact your grader')
+    comments.append('program did not finish (-70)')
   else:
     output = sub.communicate()[0].decode('utf-8').split('=TestLinkedList=')
     if len(output) == 2:
       output = output[1].split('\n')
-      output = [line for line in output if line != '' or 'finished']
+      output = [line for line in output if line != '']
       if output[0].isdigit():
         grade = int(output[0])
         for l in output[1:]:
@@ -117,11 +116,9 @@ def assign10(csid, writeToFile) :
       else:
         grade = 0
         comments.append('program crashed (-70)')
-        comments.append('contact your grader')
     else:
       grade = 0
       comments.append('program crashed (-70)')
-      comments.append('contact your grader')
 
   if grade == 70:
     print("<('.')^ Perfection ^('.')>")
