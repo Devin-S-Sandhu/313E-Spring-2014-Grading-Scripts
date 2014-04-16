@@ -98,15 +98,14 @@ def assign11(csid, writeToFile) :
   '''
   if not (fileToGrade == '' and late != -1):
 
-    index = 1
     print('\n==================================FILE 1===================================\n')
 
     
     testsFailed = ""
 
     #copying file to read and correct output file to the current directory
-    os.system('cp ../josephus.txt josephus.txt') #TODO Read from EVERY josephus1234.txt
-    correctFile = open('../output.txt', 'r') #TODO Read from EVERY output1234.txt
+    os.system('cp ../josephus1.txt josephus.txt') #TODO Read from EVERY josephus1234.txt
+    correctFile = open('../output1.txt', 'r') #TODO Read from EVERY output1234.txt
     correctLines = correctFile.read().splitlines()
 
     #Getting output from student
@@ -119,52 +118,188 @@ def assign11(csid, writeToFile) :
     
     #Lengths don't match
     if(clen != olen):
-      grade -= 1
       #They didn't output last surviving soldier
       if(clen == (olen + 1)):
+        grade -= 1
         testsFailed += "Didn't print surviving soldier \n"
     
-    #Check that all the other lines are the same
-    for i in range(minLen):
-      if outputLines[i] != correctLines[i]:
-        grade -= 16
+        #Check that all the other lines are the same
+        for i in range(minLen):
+          if outputLines[i] != correctLines[i]:
+            grade -= 16
+            testsFailed += "Incorrect output \n"
+            break
+
+      else:
+        grade -= 17
         testsFailed += "Didn't print surviving soldier \n"
-        break
+
+    else:
+      #Check that all the other lines are the same
+        for i in range(minLen):
+          if outputLines[i] != correctLines[i]:
+            grade -= 17
+            testsFailed += "Incorrect output \n"
+            break
     
     #write to the comments file
     if len(testsFailed) != 0:
-      comments.append("On josephus1.txt: " + testsFailed)
+      comments.append("On josephus1.txt: \n" + testsFailed + "\n")
     else:
       print('Passed all tests on file 1')
 
-    # print('\n============================FILE 2===================================\n')
-    # os.system('cp ../josephus2.txt josephus.txt')
-    # outputLines2 = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
-    # correctFile2 = open('../output2.txt', 'r')
-    # correctLines2 = correctFile2.read().splitlines()
-    # minLen2 = min(len(outputLines2), len(correctLines2))
-    # testsFailed2 = []
-    # for j in range(minLen2):
-    #   if outputLines2[j] == correctLines2[j]:
-    #     grade += 1
-    #   else:
-    #     print('\tTheir Output')
-    #     print('\t' + outputLines2[j])
-    #     print('\tCorrect Output')
-    #     print('\t' + correctLines2[j])
-    #     correctInput = input("Is this line ok? (y/h/n, h is for half, hit enter for y): ")
-    #     if correctInput == 'y' or correctInput == '':
-    #       grade += 1
-    #     elif correctInput == 'h':
-    #       grade += 0.5
-    #       testsFailed2.append(j)
-    #     else:
-    #       testsFailed2.append(j)
+    print('\n==================================FILE 2===================================\n')
 
-    # if len(testsFailed2) != 0:
-    #   comments.append("File 2: Failed lines: " + ' '.join(str(x) for x in testsFailed2))
-    # else:
-    #   print('Passed all tests on file 2')
+    
+    testsFailed = ""
+
+    #copying file to read and correct output file to the current directory
+    os.system('cp ../josephus2.txt josephus.txt') #TODO Read from EVERY josephus1234.txt
+    correctFile = open('../output2.txt', 'r') #TODO Read from EVERY output1234.txt
+    correctLines = correctFile.read().splitlines()
+
+    #Getting output from student
+    outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
+
+    #Length of the files (output and correct)
+    olen = len(outputLines)
+    clen = len(correctLines)
+    minLen = min(len(outputLines), len(correctLines)) 
+    
+    #Lengths don't match
+    if(clen != olen):
+      #They didn't output last surviving soldier
+      if(clen == (olen + 1)):
+        grade -= 1
+        testsFailed += "Didn't print surviving soldier \n"
+    
+        #Check that all the other lines are the same
+        for i in range(minLen):
+          if outputLines[i] != correctLines[i]:
+            grade -= 16
+            testsFailed += "Incorrect output \n"
+            break
+
+      else:
+        grade -= 17
+        testsFailed += "Didn't print surviving soldier \n"
+
+    else:
+      #Check that all the other lines are the same
+        for i in range(minLen):
+          if outputLines[i] != correctLines[i]:
+            grade -= 17
+            testsFailed += "Incorrect output \n"
+            break
+    
+    #write to the comments file
+    if len(testsFailed) != 0:
+      comments.append("On josephus2.txt: \n" + testsFailed + "\n")
+    else:
+      print('Passed all tests on file 2')
+
+    print('\n==================================FILE 3===================================\n')
+
+    
+    testsFailed = ""
+
+    #copying file to read and correct output file to the current directory
+    os.system('cp ../josephus3.txt josephus.txt') #TODO Read from EVERY josephus1234.txt
+    correctFile = open('../output3.txt', 'r') #TODO Read from EVERY output1234.txt
+    correctLines = correctFile.read().splitlines()
+
+    #Getting output from student
+    outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
+
+    #Length of the files (output and correct)
+    olen = len(outputLines)
+    clen = len(correctLines)
+    minLen = min(len(outputLines), len(correctLines)) 
+    
+    #Lengths don't match
+    if(clen != olen):
+      #They didn't output last surviving soldier
+      if(clen == (olen + 1)):
+        grade -= 1
+        testsFailed += "Didn't print surviving soldier \n"
+    
+        #Check that all the other lines are the same
+        for i in range(minLen):
+          if outputLines[i] != correctLines[i]:
+            grade -= 16
+            testsFailed += "Incorrect output \n"
+            break
+
+      else:
+        grade -= 17
+        testsFailed += "Didn't print surviving soldier \n"
+
+    else:
+      #Check that all the other lines are the same
+        for i in range(minLen):
+          if outputLines[i] != correctLines[i]:
+            grade -= 17
+            testsFailed += "Incorrect output \n"
+            break
+    
+    #write to the comments file
+    if len(testsFailed) != 0:
+      comments.append("On josephus3.txt: \n" + testsFailed + "\n")
+    else:
+      print('Passed all tests on file 3')
+
+    print('\n==================================FILE 4===================================\n')
+
+    
+    testsFailed = ""
+
+    #copying file to read and correct output file to the current directory
+    os.system('cp ../josephus4.txt josephus.txt') #TODO Read from EVERY josephus1234.txt
+    correctFile = open('../output4.txt', 'r') #TODO Read from EVERY output1234.txt
+    correctLines = correctFile.read().splitlines()
+
+    #Getting output from student
+    outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
+
+    #Length of the files (output and correct)
+    olen = len(outputLines)
+    clen = len(correctLines)
+    minLen = min(len(outputLines), len(correctLines)) 
+    
+    #Lengths don't match
+    if(clen != olen):
+      #They didn't output last surviving soldier
+      if(clen == (olen + 1)):
+        grade -= 1
+        testsFailed += "Didn't print surviving soldier \n"
+    
+        #Check that all the other lines are the same
+        for i in range(minLen):
+          if outputLines[i] != correctLines[i]:
+            grade -= 16
+            testsFailed += "Incorrect output \n"
+            break
+
+      else:
+        grade -= 17
+        testsFailed += "Didn't print surviving soldier \n"
+
+    else:
+      #Check that all the other lines are the same
+        for i in range(minLen):
+          if outputLines[i] != correctLines[i]:
+            grade -= 17
+            testsFailed += "Incorrect output \n"
+            break
+    
+    #write to the comments file
+    if len(testsFailed) != 0:
+      comments.append("On josephus4.txt: \n" + testsFailed + "\n")
+    else:
+      print('Passed all tests on file 4')
+
+
+
 
   #checking for header and style
   input("Hit Enter to cat first 20 lines (header)")
