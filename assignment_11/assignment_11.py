@@ -109,44 +109,50 @@ def assign11(csid, writeToFile) :
     correctLines = correctFile.read().splitlines()
 
     #Getting output from student
-    outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
+    try:
+      outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
 
-    #Length of the files (output and correct)
-    olen = len(outputLines)
-    clen = len(correctLines)
-    minLen = min(len(outputLines), len(correctLines)) 
-    
-    #Lengths don't match
-    if(clen != olen):
-      #They didn't output last surviving soldier
-      if(clen == (olen + 1)):
-        grade -= 1
-        testsFailed += "Didn't print surviving soldier \n"
-    
+      #Length of the files (output and correct)
+      olen = len(outputLines)
+      clen = len(correctLines)
+      
+      minLen = min(len(outputLines), len(correctLines)) 
+      
+      #Lengths don't match
+      if(clen != olen):
+        #They didn't output last surviving soldier
+        if(clen == (olen + 1)):
+          grade -= 1
+          testsFailed += "Didn't print surviving soldier"
+      
+          #Check that all the other lines are the same
+          for i in range(minLen):
+            if outputLines[i] != correctLines[i]:
+              grade -= 16
+              testsFailed += ", Incorrect output "
+              break
+
+        else:
+          grade -= 17
+          testsFailed += "Incorrect output "
+
+      else:
         #Check that all the other lines are the same
         for i in range(minLen):
           if outputLines[i] != correctLines[i]:
-            grade -= 16
-            testsFailed += "Incorrect output \n"
-            break
-
-      else:
-        grade -= 17
-        testsFailed += "Didn't print surviving soldier \n"
-
-    else:
-      #Check that all the other lines are the same
-        for i in range(minLen):
-          if outputLines[i] != correctLines[i]:
             grade -= 17
-            testsFailed += "Incorrect output \n"
+            testsFailed += "Incorrect output "
             break
-    
-    #write to the comments file
-    if len(testsFailed) != 0:
-      comments.append("On josephus1.txt: \n" + testsFailed + "\n")
-    else:
-      print('Passed all tests on file 1')
+      
+      #write to the comments file
+      if len(testsFailed) != 0:
+        comments.append("On josephus1.txt: " + testsFailed + " ")
+      else:
+        print('Passed all tests on file 1')
+    except KeyboardInterrupt:
+      print(' passed ^C on input file 1')
+      grade -= 17
+      comments.append("On josephus1.txt: Program didn't finish ")
 
     print('\n==================================FILE 2===================================\n')
 
@@ -159,44 +165,49 @@ def assign11(csid, writeToFile) :
     correctLines = correctFile.read().splitlines()
 
     #Getting output from student
-    outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
+    try:
+      outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
 
-    #Length of the files (output and correct)
-    olen = len(outputLines)
-    clen = len(correctLines)
-    minLen = min(len(outputLines), len(correctLines)) 
-    
-    #Lengths don't match
-    if(clen != olen):
-      #They didn't output last surviving soldier
-      if(clen == (olen + 1)):
-        grade -= 1
-        testsFailed += "Didn't print surviving soldier \n"
-    
+      #Length of the files (output and correct)
+      olen = len(outputLines)
+      clen = len(correctLines)
+      minLen = min(len(outputLines), len(correctLines)) 
+      
+      #Lengths don't match
+      if(clen != olen):
+        #They didn't output last surviving soldier
+        if(clen == (olen + 1)):
+          grade -= 1
+          testsFailed += "Didn't print surviving soldier"
+      
+          #Check that all the other lines are the same
+          for i in range(minLen):
+            if outputLines[i] != correctLines[i]:
+              grade -= 16
+              testsFailed += ", Incorrect output "
+              break
+
+        else:
+          grade -= 17
+          testsFailed += "Incorrect output "
+
+      else:
         #Check that all the other lines are the same
         for i in range(minLen):
           if outputLines[i] != correctLines[i]:
-            grade -= 16
-            testsFailed += "Incorrect output \n"
-            break
-
-      else:
-        grade -= 17
-        testsFailed += "Didn't print surviving soldier \n"
-
-    else:
-      #Check that all the other lines are the same
-        for i in range(minLen):
-          if outputLines[i] != correctLines[i]:
             grade -= 17
-            testsFailed += "Incorrect output \n"
+            testsFailed += "Incorrect output "
             break
-    
-    #write to the comments file
-    if len(testsFailed) != 0:
-      comments.append("On josephus2.txt: \n" + testsFailed + "\n")
-    else:
-      print('Passed all tests on file 2')
+      
+      #write to the comments file
+      if len(testsFailed) != 0:
+        comments.append("On josephus2.txt: " + testsFailed + " ")
+      else:
+        print('Passed all tests on file 2')
+    except KeyboardInterrupt:
+      print(' passed ^C on input file 2')
+      grade -= 17
+      comments.append("On josephus2.txt: Program didn't finish ")
 
     print('\n==================================FILE 3===================================\n')
 
@@ -209,44 +220,49 @@ def assign11(csid, writeToFile) :
     correctLines = correctFile.read().splitlines()
 
     #Getting output from student
-    outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
+    try:
+      outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
 
-    #Length of the files (output and correct)
-    olen = len(outputLines)
-    clen = len(correctLines)
-    minLen = min(len(outputLines), len(correctLines)) 
-    
-    #Lengths don't match
-    if(clen != olen):
-      #They didn't output last surviving soldier
-      if(clen == (olen + 1)):
-        grade -= 1
-        testsFailed += "Didn't print surviving soldier \n"
-    
+      #Length of the files (output and correct)
+      olen = len(outputLines)
+      clen = len(correctLines)
+      minLen = min(len(outputLines), len(correctLines)) 
+      
+      #Lengths don't match
+      if(clen != olen):
+        #They didn't output last surviving soldier
+        if(clen == (olen + 1)):
+          grade -= 1
+          testsFailed += "Didn't print surviving soldier"
+      
+          #Check that all the other lines are the same
+          for i in range(minLen):
+            if outputLines[i] != correctLines[i]:
+              grade -= 16
+              testsFailed += ", Incorrect output "
+              break
+
+        else:
+          grade -= 17
+          testsFailed += "Incorrect output "
+
+      else:
         #Check that all the other lines are the same
         for i in range(minLen):
           if outputLines[i] != correctLines[i]:
-            grade -= 16
-            testsFailed += "Incorrect output \n"
-            break
-
-      else:
-        grade -= 17
-        testsFailed += "Didn't print surviving soldier \n"
-
-    else:
-      #Check that all the other lines are the same
-        for i in range(minLen):
-          if outputLines[i] != correctLines[i]:
             grade -= 17
-            testsFailed += "Incorrect output \n"
+            testsFailed += "Incorrect output "
             break
-    
-    #write to the comments file
-    if len(testsFailed) != 0:
-      comments.append("On josephus3.txt: \n" + testsFailed + "\n")
-    else:
-      print('Passed all tests on file 3')
+      
+      #write to the comments file
+      if len(testsFailed) != 0:
+        comments.append("On josephus3.txt: " + testsFailed + " ")
+      else:
+        print('Passed all tests on file 3')
+    except KeyboardInterrupt:
+      print(' passed ^C on input file 3')
+      grade -= 17
+      comments.append("On josephus3.txt: Program didn't finish ")
 
     print('\n==================================FILE 4===================================\n')
 
@@ -259,45 +275,93 @@ def assign11(csid, writeToFile) :
     correctLines = correctFile.read().splitlines()
 
     #Getting output from student
-    outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
+    try:
+      outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
 
-    #Length of the files (output and correct)
-    olen = len(outputLines)
-    clen = len(correctLines)
-    minLen = min(len(outputLines), len(correctLines)) 
-    
-    #Lengths don't match
-    if(clen != olen):
-      #They didn't output last surviving soldier
-      if(clen == (olen + 1)):
-        grade -= 1
-        testsFailed += "Didn't print surviving soldier \n"
-    
+      #Length of the files (output and correct)
+      olen = len(outputLines)
+      clen = len(correctLines)
+      minLen = min(len(outputLines), len(correctLines)) 
+      
+      #Lengths don't match
+      if(clen != olen):
+        #They didn't output last surviving soldier
+        if(clen == (olen + 1)):
+          grade -= 1
+          testsFailed += "Didn't print surviving soldier"
+      
+          #Check that all the other lines are the same
+          for i in range(minLen):
+            if outputLines[i] != correctLines[i]:
+              grade -= 16
+              testsFailed += ", Incorrect output "
+              break
+
+        else:
+          grade -= 17
+          testsFailed += "Incorrect output "
+
+      else:
         #Check that all the other lines are the same
         for i in range(minLen):
           if outputLines[i] != correctLines[i]:
-            grade -= 16
-            testsFailed += "Incorrect output \n"
-            break
-
-      else:
-        grade -= 17
-        testsFailed += "Didn't print surviving soldier \n"
-
-    else:
-      #Check that all the other lines are the same
-        for i in range(minLen):
-          if outputLines[i] != correctLines[i]:
             grade -= 17
-            testsFailed += "Incorrect output \n"
+            testsFailed += "Incorrect output "
             break
+      
+      #write to the comments file
+      if len(testsFailed) != 0:
+        comments.append("On josephus4.txt: " + testsFailed + " ")
+      else:
+        print('Passed all tests on file 4')
+    except KeyboardInterrupt:
+      print(' passed ^C on input file 4')
+      grade -= 17
+      comments.append("On josephus4.txt: Program didn't finish ")
     
-    #write to the comments file
-    if len(testsFailed) != 0:
-      comments.append("On josephus4.txt: \n" + testsFailed + "\n")
-    else:
-      print('Passed all tests on file 4')
 
+    #These people did the extra credit
+    if(csid == "mlj987" or csid == "lem" or csid == "mshankar"):
+      print('\n==================================Extra Credit===================================\n')
+
+      
+      testsFailed = ""
+
+      #copying file to read and correct output file to the current directory
+      os.system('cp ../josephusEC.txt josephus.txt') #TODO Read from EVERY josephus1234.txt
+      correctFile = open('../outputEC.txt', 'r') #TODO Read from EVERY output1234.txt
+      correctLines = correctFile.read().splitlines()
+
+      #Getting output from student
+      try:
+        outputLines = subprocess.getoutput('python3 ' + fileToGrade).splitlines()
+
+        #Length of the files (output and correct)
+        olen = len(outputLines)
+        clen = len(correctLines)
+        minLen = min(len(outputLines), len(correctLines)) 
+        
+        #Lengths don't match
+        if(clen != olen):
+          testsFailed += "Extra Credit didn't work "
+
+        else:
+          #Check that all the other lines are the same
+          for i in range(minLen):
+            if outputLines[i] != correctLines[i]:
+              testsFailed += "Extra Credit didn't work "
+              break
+        
+        #write to the comments file
+        if len(testsFailed) != 0:
+          comments.append("On josephusEC.txt: " + testsFailed + " ")
+        else:
+          grade += 10
+          comments.append(" +10 for Extra Credit ")
+          print('Passed all tests on file 4')
+      except KeyboardInterrupt:
+        print(' passed ^C on input file Extra Credit')
+        comments.append("On josephusEC.txt: Extra Credit didn't work ")
 
 
 
