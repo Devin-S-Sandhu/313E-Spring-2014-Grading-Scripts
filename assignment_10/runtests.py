@@ -143,7 +143,7 @@ def runTests(run, list1, list2, addWorks):
             grade -= 2
             cmt += ' in test1 (-2)'
         else:
-            grade -= 4
+            grade -= 5
             cmt += ' in test2 (-5)'
         comments.append(cmt)
 
@@ -159,7 +159,7 @@ def runTests(run, list1, list2, addWorks):
             grade -= 2
             cmt += ' in test1 (-2)'
         else:
-            grade -= 4
+            grade -= 5
             cmt += ' in test2 (-5)'
         comments.append(cmt)
 
@@ -175,7 +175,7 @@ def runTests(run, list1, list2, addWorks):
             grade -= 2
             cmt += ' in test1 (-2)'
         else:
-            grade -= 4
+            grade -= 5
             cmt += ' in test2 (-5)'
         comments.append(cmt)
 
@@ -193,7 +193,7 @@ def runTests(run, list1, list2, addWorks):
             grade -= 2
             cmt += ' in test1 (-2)'
         else:
-            grade -= 4
+            grade -= 5
             cmt += ' in test2 (-5)'
         comments.append(cmt)
 
@@ -214,7 +214,7 @@ def runTests(run, list1, list2, addWorks):
             grade -= 2
             cmt += ' in test1 (-2)'
         else:
-            grade -= 4
+            grade -= 5
             cmt += ' in test2 (-5)'
         comments.append(cmt)
 
@@ -234,10 +234,10 @@ def runTests(run, list1, list2, addWorks):
     except:
         cmt = 'failed mergeList'
         if run == 1:
-            grade -= 1
+            grade -= 2
             cmt += ' in test1 (-2)'
         else:
-            grade -= 4
+            grade -= 5
             cmt += ' in test2 (-5)'
         comments.append(cmt)
 
@@ -253,10 +253,10 @@ def runTests(run, list1, list2, addWorks):
     except:
         cmt = 'failed isEqual'
         if run == 1:
-            grade -= 1
+            grade -= 2
             cmt += ' in test1 (-2)'
         else:
-            grade -= 4
+            grade -= 5
             cmt += ' in test2 (-5)'
         comments.append(cmt)
 
@@ -273,10 +273,10 @@ def runTests(run, list1, list2, addWorks):
     except:
         cmt = 'failed removeDuplicates'
         if run == 1:
-            grade -= 1
+            grade -= 2
             cmt += ' in test1 (-2)'
         else:
-            grade -= 4
+            grade -= 5
             cmt += ' in test2 (-5)'
         comments.append(cmt)
 
