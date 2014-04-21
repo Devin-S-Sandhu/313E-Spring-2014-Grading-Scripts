@@ -96,13 +96,17 @@ def assign14(csid, writeToFile) :
   5 for formatting
   '''
 
-  fillerText = ['Substitution Cipher','Enter Plain Text to be Encoded: Encoded Text: ','Enter Encoded Text to be Decoded: Decoded Plain Text: ','Vigenere Cipher','Enter Plain Text to be Encoded: Enter Pass Phrase (no spaces allowed): Encoded Text: ','Enter Encoded Text to be Decoded: Enter Pass Phrase (no spaces allowed): Decoded Plain Text: ']
+  #fillerText = ['Substitution Cipher','Enter Plain Text to be Encoded: Encoded Text: ','Enter Encoded Text to be Decoded: Decoded Plain Text: ','Vigenere Cipher','Enter Plain Text to be Encoded: Enter Pass Phrase (no spaces allowed): Encoded Text: ','Enter Encoded Text to be Decoded: Enter Pass Phrase (no spaces allowed): Decoded Plain Text: ']
+  fillerText = ['Enter encryption key: ', 'Enter string to be encrypted: Encrypted string: ', 'Enter string to be decrypted: Decrypted string: ']
   inputText = []
   outputText = []
-  outputText.append(['dsvvb kbnvw','hello world','zilwg aocdh','hello world'])
-  outputText.append(['dqc emlp!!!','hai   guyz','qfh','!!tri  cky!!'])
-  inputText.append(['hello world', 'dsvvb kbnvw','hello world','seal','zilwg aocdh','seal'])
-  inputText.append(['HAI GUYZ!!!', 'dqc   emlp','xyz','thisisapassphrase','!!tri  cky!!','aaaaaazzzzzz'])
+
+  #TODO: Modify this text: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1========================
+
+  # outputText.append(['dsvvb kbnvw','hello world','zilwg aocdh','hello world'])
+  # outputText.append(['dqc emlp!!!','hai   guyz','qfh','!!tri  cky!!'])
+  # inputText.append(['hello world', 'dsvvb kbnvw','hello world','seal','zilwg aocdh','seal'])
+  # inputText.append(['HAI GUYZ!!!', 'dqc   emlp','xyz','thisisapassphrase','!!tri  cky!!','aaaaaazzzzzz'])
 
   if not (fileToGrade == '' and late != -1):
     correctFormatting = True
