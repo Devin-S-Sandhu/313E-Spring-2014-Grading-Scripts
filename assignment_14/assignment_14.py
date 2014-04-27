@@ -88,10 +88,8 @@ def assign14(csid, writeToFile) :
 
   #grading time!
   '''
-  53 points
-  2 24 point runs
-  substution encode/decode is 10 points
-  vigenere encode/decode is 14 points
+  75 points (caps at 70)
+  10 7 pt runs
   5 for formatting
   '''
 
@@ -159,17 +157,22 @@ def assign14(csid, writeToFile) :
         count += 1
   if grade == 70:
     print('Perfection =D')
+  elif grade < 0:
+    grade = 0
+    print('Grade: ' + str(grade)+'/70')
   else:
     print('Grade: ' + str(grade)+'/70')
 
   #checking for header and style
-  input("Hit Enter to cat")
-  print(subprocess.getoutput('cat ' + fileToGrade))
+  input("Hit Enter to cat first 20 lines (header)")
+  print(subprocess.getoutput('head -20 ' + fileToGrade))
   headerInput = input("Header(y/n, hit enter for y): ")
   if headerInput == 'y' or headerInput == '':
     header = True
-  else:
+  else :
     header = False
+  input("Hit Enter to cat whole file (style/comments)")
+  print(subprocess.getoutput('cat ' + fileToGrade))
   style = input("Style/Other (Out of 30, hit enter for 30): ")
   gen_comments = input("General Comments?: ").rstrip().lstrip()
   gen_comments = gen_comments if len(gen_comments) is not 0 else "style"
@@ -183,10 +186,13 @@ def assign14(csid, writeToFile) :
 
   #writing grade time!
   if late == -1:
-    if writeToFile: outputFile.write('0\t More than 2 days late')
-    print('Late more than 2 days!')
-  else:
-    if late == 2:
+    if writeToFile: outputFile.write('0\t More than 7 days late')
+    print('Late more than 7 days!')
+  else :
+    if late == 3:
+      comments.append("3-7 days late (-30)")
+      grade -= 30
+    elif late == 2:
       comments.append("2 days late (-20)")
       grade -= 20
     elif late == 1:
@@ -195,14 +201,14 @@ def assign14(csid, writeToFile) :
 
     if wrongFileName or not header:
       grade -= 5
-      if wrongFileName:
+      if wrongFileName and header:
         comments.append("wrong filename (-5)")
-      elif header:
+      elif header and not wrongFileName:
         comments.append("malformed header (-5)")
       else:
         comments.append("wrong filename and malformed header (-5)")
 
-  if writeToFile: outputFile.write(str(grade+style) + "\t" + ', '.join(comments))
+    if writeToFile: outputFile.write(str(grade+style) + "\t" + ', '.join(comments))
 
   if writeToFile: outputFile.write('\n')
   os.chdir("..")
@@ -220,6 +226,8 @@ def isLate(splitted):
     return 1
   elif turninDate <= lateTwo:
     return 2
+  elif turninDate <= lateSev:
+    return 3
   else :
     return -1
 
