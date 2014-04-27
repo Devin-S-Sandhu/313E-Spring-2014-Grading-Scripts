@@ -45,7 +45,6 @@ def main():
     print('======================')
     assign14(csid, False)
   outputFile.close()
-  inputFile.close()
 
 def assign14(csid, writeToFile) :
   fileToGrade = ""
@@ -103,10 +102,17 @@ def assign14(csid, writeToFile) :
 
   #TODO: Modify this text: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1========================
 
-  # outputText.append(['dsvvb kbnvw','hello world','zilwg aocdh','hello world'])
-  # outputText.append(['dqc emlp!!!','hai   guyz','qfh','!!tri  cky!!'])
-  # inputText.append(['hello world', 'dsvvb kbnvw','hello world','seal','zilwg aocdh','seal'])
-  # inputText.append(['HAI GUYZ!!!', 'dqc   emlp','xyz','thisisapassphrase','!!tri  cky!!','aaaaaazzzzzz'])
+  outputText.append(['*!<!<!>!<<!*!<','meet me'])
+  outputText.append(['<!<<!<><>><<<!<><>><<<!<><>>!<<<!>>!<><>>!<>>!<><>><<<!<<<>>','civic racecar'])
+  outputText.append(['<><>><<!<<!<<!*!<<<!<><>><<!<<','meet me'])
+  outputText.append(['>>!>>>!>>>!<!*!>>>>>>>>>>>>><','no cd'])
+  outputText.append(['<<<><<!<><>><<<!<><!<<<>!<<!<<<!<><>><!<<<!<<<><!<><>>!<<<><','ttt   '])
+
+  inputText.append(['meet me', 'meet me','*!<!<!>!<<!*!<'])
+  inputText.append(['the quick brown fox jumps over the lazy dog', 'Hello World','<<<>!<><!>><!<><!<<<>!<<<!<>>!<<<><<!<<<>!<<!<<<>!<<<><<!<>>'])
+  inputText.append(['the quick brown fox jumps over the lazy dog', 'meet me','<><>><<!<<!<<!*!<<<!<><>><<!<<'])
+  inputText.append(['abcdefghijklm zyxwvutsrqpno', 'CDd ay','>>>>>>>>>>>>><<<<<<<<<<<!>>>>>>>>>>>>><<<<<<<<<<<>!<!>>!>>>'])
+  inputText.append(['the quick brown fox jumps over the lazy dog', 'Alice N BOB','*!*!*!<<<!<<<!<<<'])
 
   if not (fileToGrade == '' and late != -1):
     correctFormatting = True
@@ -124,38 +130,33 @@ def assign14(csid, writeToFile) :
       correctAnswers.append(fillerText[0])
       correctAnswers.append(fillerText[1] + outText[0])
       correctAnswers.append(fillerText[2] + outText[1])
-      correctAnswers.append(fillerText[3])
-      correctAnswers.append(fillerText[4] + outText[2])
-      correctAnswers.append(fillerText[5] + outText[3])
-      modCount = count % 6
 
       for (theirs, ours) in zip(answers,correctAnswers):
         if correctFormatting:
           if theirs.strip() != ours.strip():
             correctFormatting = False
             grade -= 5
-            comments.append('Incorrect Formatting (-5) yours:' + theirs +' ours:'+ours)
+            comments.append('Incorrect Formatting (-5) YOURS:' + theirs +' OURS:'+ours)
             print('\tIncorrect Formatting')
             print('\tTheirs\n\t'+theirs)
             print('\tOurs\n\t'+ours)
           else:
             print('Passed Test ' + str(count + 1))
-        if not correctFormatting and modCount != 0 and modCount != 3:
+        if not correctFormatting:
           t = theirs.split(':')[-1].strip() 
           o = ours.split(':')[-1].strip()
           if t != o: 
-            comments.append('Failed Test '+ str(count+1))
-            print('X '+comments[-1])
+            comments.append('  || Failed Test '+ str(count+1))
+            comments.append(': ' + inText[(count%3)] + ' with key: ' + inText[0])
+            comments.append(' YOURS:' + theirs +' OURS:'+ours)
+            print('Failed Test '+ str(count+1))
+            print(inText[(count%3)] + ' with key: ' + inText[0])
             print('\tTheirs\n\t'+theirs)
             print('\tOurs\n\t'+ours)
-            if modCount == 1 or modCount == 2:
-              grade -= 5
-            else:
-              grade -= 7
+            grade -= 7
           else:
             print('Passed Test ' + str(count+1))
         count += 1
-        modCount += 1
   if grade == 70:
     print('Perfection =D')
   else:
