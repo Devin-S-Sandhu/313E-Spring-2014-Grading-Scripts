@@ -12,10 +12,16 @@ pipes = {'stdout':subprocess.PIPE, 'stdin':subprocess.PIPE, 'stderr':subprocess.
 
 outputFilename = 'assignment_12.txt'
 outputFile = open(outputFilename, 'a')
-filename = "MagicSquare.py"
-dateString = "4-19-2014 23:30:00"
+filename = "TestSparseMatrix.py"
+dateString = "4-05-2014 23:59:59"
 
 def main():
+  editor = ''
+  if input('Want to use Sublime instead of cat? (N for No) ') != 'N':
+    editor = '~/sublime_text'
+  elif input('Want to use Vim instead of cat? (N for No) ') != 'N':
+    editor = 'vim'
+
   out = subprocess.getoutput('ls ./')
   CSIDS = out.split("\n")
   if len(sys.argv) == 3:
@@ -34,7 +40,7 @@ def main():
       print('======================')
       print(csid + " " + str(count) + " out of " + str(len(myList)))
       print('======================')
-      assign12(csid, True)
+      assign12(csid, True,editor)
 
   #singleton mode
   else:
@@ -43,68 +49,10 @@ def main():
     print('======================')
     print(csid)
     print('======================') 
-    assign12(csid, False)
+    assign12(csid, False,editor)
   outputFile.close()
 
-def checkFormatting(square):
-  try:
-    lenRows = set(len(r) for r in square)
-    if len(square) == 3:
-      return len(lenRows) == 1 and len(set(r.count(' ') for r in square)) == 1
-    else: #might do something fancier, but this should work
-      return len(lenRows) == 1
-
-  except:
-    print("ran into an error in checkFormatting\n",sys.exc_info())
-    print('Input:\n' + str(square))
-    return False
-
-
-def checkMagicSquare(strSquare):
-  try:
-    square = []
-    for r in strSquare:
-      square.append([int(x) for x in r.split()])
-
-    sums = []
-    #rows
-    for row in square:
-      sums.append(sum(row))
-    #cols
-    for x in range(len(square)):
-      temp = 0
-      for row in square:
-        temp += row[x]
-      sums.append(temp)
-    #diagonals
-    diagOne = 0
-    diagTwo = 0
-    for x in range(len(square)):
-      diagOne += square[x][x]
-      diagTwo += square[len(square)-x-1][len(square)-x-1]
-    sums.append(diagOne)
-    sums.append(diagTwo)
-    return sums.count(sums[0]) == len(sums) and len(square) == len(square[0])
-  except:
-    print("ran into an error in checkMagicSquare\n",sys.exc_info())
-    print('Input:\n' + str(strSquare))
-    return False
-
-def checkPermutations(squares):
-  for square in squares:
-    if not checkMagicSquare(square):
-      return False
-
-  # these are the unique 3x3 squares
-  correctSet = {'492357816','276951438','618753294','834159672','294753618','672159834','816357492','438951276'}
-  squareSet = set()
-  for square in squares:
-    s = ''.join(square).replace(' ','')
-    squareSet.add(s)
-  return len(correctSet) - len(squareSet) == len(correctSet-squareSet)
-
-
-def assign12(csid, writeToFile) :
+def assign12(csid, writeToFile,editor):
   fileToGrade = ""
   late = 0
   grade = 70
@@ -112,7 +60,7 @@ def assign12(csid, writeToFile) :
   wrongFileName = False
   header = True
   comments = []
-
+  
   os.chdir(csid)
   if writeToFile: outputFile.write(csid + "\t")
   files = os.listdir('.')
@@ -148,12 +96,10 @@ def assign12(csid, writeToFile) :
   '''
   70 + 10
   
-  10 - Dense str()
-
   15 - Sparse add()
   15 - Sparse mult()
-  5 - Sparse getRow()
-  5 - Sparse getCol()
+  10 - Sparse getRow()
+  10 - Sparse getCol()
   20 - Sparse str()
 
   +10 - Sparse str() extra credit
@@ -161,91 +107,47 @@ def assign12(csid, writeToFile) :
   grade = 70
 
   #Test these squares
-  inputText = ['7','9','2\n3']
-  inputNums = [7,9,3]
-  output = []
   formatting = True
   if not (fileToGrade == '' and late != -1):
     #grab output
-    for text in inputText:
+    output = []
+    for run in range(1,4):
       try:
-        process = subprocess.Popen(['python3', fileToGrade], **pipes)
-        out = process.communicate(bytes(text, 'UTF-8'))[0]
-        output.append(str(out)[2:-1].split('\\n'))
+        print("\n=====File %d===== (Ours then Theirs)"%run)
+        testFile = 'matrix%d.txt'%run
+        outFile = 'out%d.txt'%run
+        correctFile = '../correct%d.txt'%run
+        os.system('cp ../'+ testFile +' matrix.txt')
+        output.append(subprocess.getoutput('python3 ' + fileToGrade + '> ' + outFile).splitlines())
+
+        #modifying output
+        f = open(outFile,'r')
+        lines = f.readlines()
+        f.close()
+        f = open(outFile,'w')
+        lines = [x.strip() for x in lines]
+        lines = list(filter(None,lines))
+        f.write('\n'.join(lines))
+        f.close()
+
+        os.system('diff -yB ' + correctFile +' '+outFile)
+        print('\n'+'='*35)
+
+        off = input('points off: ')
+        if off != '':
+          grade -= int(off)
+          print('Current Grade: %d'%grade)
+          comment = input('comments? ')
+          if comment != '':
+            comments.append(comment)
+
       except KeyboardInterrupt:
         print(' passed ^C on input',text)
+    print()
 
-    #test output
-    checkedPermutations = False
-    for (out,test) in zip(output,inputNums):
-      out = [x.rstrip() for x in out]
-      out = list(filter(None,out))
-
-      filtered = []
-      for line in out:
-        #people spelt square wrong...
-        if 'square' not in line and 'odd' not in line and 'magic' not in line:
-          filtered.append(line)
-      if len(filtered) != test + (3*8):
-        print()
-
-      square = [filtered[y] for y in range(min(len(filtered),test))]
-      if formatting and not checkFormatting(square):
-        formatting = False
-        grade -= 10
-        comment = "incorrectly formatted square (-10)"
-        print(comment)
-        for row in square:
-          print('\t' + str(row))
-        comments.append(comment)
-      if not checkMagicSquare(square):
-        grade -= 10
-        comment = "%dx%d magic square isn't well formed (-10)"%(test,test)
-        if test == 3:
-          comment += ', might not have reprompted for input when given an even number'
-        print(comment)
-        for row in square:
-          print('\t' + str(row))
-        comments.append(comment)
-
-      if not checkedPermutations: #only check permutations once
-        checkedPermutations = True
-        permutations = []
-        trimmed = filtered[test:]
-        for x in range(0,len(trimmed),3):
-          square = []
-          square.append(trimmed[x])
-          if x + 1 < len(trimmed):
-            square.append(trimmed[x+1])
-          if x + 2 < len(trimmed):
-            square.append(trimmed[x+2])
-          permutations.append(square)
-        if len(permutations) != 8:
-          grade -= 15
-          comment = 'outputted %d 3x3 squares instead of 8 (-15)'%len(permutations)
-          print(comment)
-          comments.append(comment)
-        if not checkPermutations(permutations):
-          grade -= 15
-          comment = 'incorrect set of unique 3x3 squares (-15)'
-          print(comment)
-          comments.append(comment)
-
-      if len(filtered) != test + (3*8):
-        s = 'more' if len(filtered) > test + (3*8) else 'less'
-        print('!!!\nparsed output contains %s lines than expected'%s)
-        print('dumping raw output for test %dx%d'%(test,test))
-        for line in out:
-          print(line)
-        off = input('Points off (enter is 0 too): ')
-        off = off.strip()
-        if off.isdigit():
-          comment = input('Comment: ')
-          comments.append(comment)
-          grade -= int(off)
-
-  if grade == 70:
+  if grade >= 70:
     print("<('.')^ Perfection ^('.')>")      
+    print("Grade: %d/70"%grade)      
   else:
     print("Grade: %d/70"%grade)      
 
@@ -255,12 +157,15 @@ def assign12(csid, writeToFile) :
   headerInput = input("Header(y/n, hit enter for y): ")
   if headerInput == 'y' or headerInput == '':
     header = True
-  else :
+  else:
     header = False
   input("Hit Enter to cat whole file (style/comments)")
-  print(subprocess.getoutput('cat ' + fileToGrade))
+  if editor != '':
+    os.system(editor +' '+ fileToGrade)
+  else:
+    print(subprocess.getoutput('cat ' + fileToGrade))
   style = input("Style/Other (Out of 30, hit enter for 30): ")
-  gen_comments = input("General Comments?: ").rstrip().lstrip()
+  gen_comments = input("General Comments?: ").strip()
   gen_comments = gen_comments if len(gen_comments) is not 0 else "style"
   if not style.isdigit():
     style = 30
