@@ -145,6 +145,8 @@ def assign13(csid, writeToFile) :
                 cout.add(int(j))
             if sout != cout:
               numWrong += 1
+          else:
+            numWrong += 1
         grade += (6 - numWrong)
         if numWrong != 0:
           comments.append('failed printLevel in test ' + str(run) + '(-' + str(numWrong) + ')')
