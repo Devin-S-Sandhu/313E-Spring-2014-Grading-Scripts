@@ -1,0 +1,15 @@
+True
+
+level 1: 15 
+level 3: 5 14 18 25 
+level 5: 3 11 24 
+
+level 2: 12 19 
+level 4: 4 8 13 17 23 26 
+level 6: 
+
+4
+16
+
+4
+16
