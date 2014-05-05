@@ -101,6 +101,9 @@ def assign12(csid, writeToFile,editor):
   10 - Sparse getRow()
   10 - Sparse getCol()
   20 - Sparse str()
+    10 - formatting
+    10 - including 0's
+  setElement broken = -10
 
   +10 - Sparse str() extra credit
   '''
@@ -125,24 +128,24 @@ def assign12(csid, writeToFile,editor):
         lines = f.readlines()
         f.close()
         f = open(outFile,'w')
-        lines = [x.strip() for x in lines]
+        lines = [x.rstrip() for x in lines]
         lines = list(filter(None,lines))
         f.write('\n'.join(lines))
         f.close()
 
         os.system('diff -yB ' + correctFile +' '+outFile)
         print('\n'+'='*35)
-
-        off = input('points off: ')
-        if off != '':
-          grade -= int(off)
-          print('Current Grade: %d'%grade)
-          comment = input('comments? ')
-          if comment != '':
-            comments.append(comment)
-
       except KeyboardInterrupt:
-        print(' passed ^C on input',text)
+        print(' passed on run',run)
+
+      off = input('points off: ')
+      while off != '':
+        grade -= int(off)
+        print('Current Grade: %d'%grade)
+        comment = input('comments? ')
+        if comment != '':
+          comments.append(comment + ' (-%s)'%off)
+        off = input('points off: ')
     print()
 
   if grade >= 70:
