@@ -610,7 +610,7 @@ def getPoints(fileNum,lines):
   if c != '':
     comments.append(c)
 
-  if (pointa + p) == 0:
+  if (point + p) == 0:
     print('dumping their output')
     print('\n'.join(linesCopy))
 
