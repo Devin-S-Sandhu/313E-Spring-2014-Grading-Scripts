@@ -1,0 +1,54 @@
+Depth First Search from Houston
+Houston
+Atlanta
+Kansas City
+Los Angeles
+San Francisco
+Seattle
+Denver
+Chicago
+Boston
+New York
+Dallas
+Miami
+
+Breadth First Search from Houston
+Houston
+Atlanta
+Miami
+Dallas
+Kansas City
+New York
+Los Angeles
+Denver
+Chicago
+Boston
+San Francisco
+Seattle
+
+Minimum Cost Spanning Tree from Houston
+Houston - Atlanta
+Houston - Miami
+Houston - Dallas
+Atlanta - Kansas City
+Atlanta - New York
+Dallas - Los Angeles
+Kansas City - Denver
+Kansas City - Chicago
+New York - Boston
+Los Angeles - San Francisco
+Denver - Seattle
+
+Shortest Path from Houston
+Seattle - 4
+San Francisco - 3
+Los Angeles - 2
+Denver - 3
+Kansas City - 2
+Chicago - 3
+Boston - 3
+New York - 2
+Atlanta - 1
+Miami - 1
+Dallas - 1
+Houston - 0

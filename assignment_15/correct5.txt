@@ -1,0 +1,47 @@
+Depth First Search from 4
+4
+2
+6
+3
+0
+1
+5
+7
+9
+8
+
+Breadth First Search from 4
+4
+2
+6
+7
+3
+9
+0
+1
+5
+8
+
+Topological Sort
+4
+6
+3
+0
+1
+5
+8
+7
+9
+2
+
+Shortest Path from 4
+0 - 19
+1 - 22
+2 - 3
+3 - 16
+4 - 0
+5 - 23
+6 - 6
+7 - 2
+8 - 24
+9 - 1002

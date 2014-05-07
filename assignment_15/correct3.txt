@@ -1,0 +1,26 @@
+Depth First Search from A
+A
+B
+D
+C
+E
+
+Breadth First Search from A
+A
+B
+D
+E
+C
+
+Minimum Cost Spanning Tree from A
+A - D
+A - B
+D - C
+C - E
+
+Shortest Path from A
+A - 0
+B - 2
+C - 4
+D - 1
+E - 5

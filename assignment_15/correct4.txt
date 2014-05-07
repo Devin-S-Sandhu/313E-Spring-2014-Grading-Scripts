@@ -1,0 +1,46 @@
+Depth First Search from F
+F
+D
+A
+B
+H
+I
+C
+G
+J
+E
+
+Breadth First Search from F
+F
+D
+E
+G
+A
+C
+J
+B
+I
+H
+
+Minimum Cost Spanning Tree from F
+F - D
+F - G
+G - C
+D - E
+C - A
+A - B
+B - H
+H - I
+G - J
+
+Shortest Path from F
+A - 9
+B - 12
+C - 4
+D - 1
+E - 5
+F - 0
+G - 2
+H - 13
+I - 15
+J - 21
