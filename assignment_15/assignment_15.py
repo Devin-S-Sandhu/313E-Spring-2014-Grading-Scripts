@@ -142,23 +142,26 @@ def assign15(csid, writeToFile) :
 
   #writing grade time!
   if late in [-1,2,3]:
-    if writeToFile: outputFile.write('0\t More than 1 day1 late')
+    if writeToFile: outputFile.write('0\t More than 1 day late\n')
+    if writeToFile: outputFile.write('\n')
+    os.chdir("..")
     print('Late more than 1 day')
+    return
   elif late == 1:
     comments.append("1 day late (-10)")
     grade -= 10
     print('1 day late (-10)')
 
-    if wrongFileName or not header:
-      grade -= 5
-      if wrongFileName and header:
-        comments.append("wrong filename (-5)")
-      elif header and not wrongFileName:
-        comments.append("malformed header (-5)")
-      else:
-        comments.append("wrong filename and malformed header (-5)")
+  if wrongFileName or not header:
+    grade -= 5
+    if wrongFileName and header:
+      comments.append("wrong filename (-5)")
+    elif header and not wrongFileName:
+      comments.append("malformed header (-5)")
+    else:
+      comments.append("wrong filename and malformed header (-5)")
 
-    if writeToFile: outputFile.write(str(grade+style) + "\t" + ', '.join(comments))
+  if writeToFile: outputFile.write(str(grade+style) + "\t" + ', '.join(comments))
 
   if writeToFile: outputFile.write('\n')
   os.chdir("..")
