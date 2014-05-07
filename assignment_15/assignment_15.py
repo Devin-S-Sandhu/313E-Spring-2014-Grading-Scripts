@@ -580,6 +580,7 @@ def getPoints(fileNum,lines):
   inFile.close()
 
   #grab the output
+  linesCopy = lines[:]
   try:
     dfs = lines[:lines.index('')]
     lines = lines[lines.index('') + 1:]
@@ -589,6 +590,8 @@ def getPoints(fileNum,lines):
     lines = lines[lines.index('') + 1:]
     djik = lines[:]
   except:
+    print('parse error dumping their output')
+    print('\n'.join(linesCopy))
     return 0,['error parsing output on file %d (-14)'%fileNum]
 
   comments = []
@@ -606,6 +609,10 @@ def getPoints(fileNum,lines):
     p,c = 7,''
   if c != '':
     comments.append(c)
+
+  if (pointa + p) == 0:
+    print('dumping their output')
+    print('\n'.join(linesCopy))
 
   return(points + p,comments)
 
